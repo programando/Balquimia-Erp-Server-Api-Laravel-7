@@ -1,0 +1,18 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Facturas Electrónicas",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/facturas": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Listado de facturas creadas "
+                    }
+                }
+            }
+        }
+    }
+}
