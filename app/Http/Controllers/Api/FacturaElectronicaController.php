@@ -20,6 +20,6 @@ class FacturaElectronicaController extends Controller
          *     @OA\Response(response="200", description="Listado de facturas creadas ")
          * )
          */
-        return Facturas::all();
+        return Facturas::all()->get(10);
     }
 }
