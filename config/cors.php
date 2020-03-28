@@ -15,7 +15,7 @@ return [
     |api/*
     */
 
-    'paths'                    => ['*'],
+    'paths'                    => ['*','http://facturas.plusoft.co'],
     'allowed_methods'          => ['*'],
     'allowed_origins'          => ['*'],
     'allowed_origins_patterns' => [],
