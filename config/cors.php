@@ -12,23 +12,16 @@ return [
     | in web browsers. You are free to adjust these settings as needed.
     |
     | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-    |
+    |api/*
     */
 
-    'paths' => ['api/*'],
-
-    'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*'],
-
+    'paths'                    => ['*'],
+    'allowed_methods'          => ['*'],
+    'allowed_origins'          => ['*'],
     'allowed_origins_patterns' => [],
-
-    'allowed_headers' => ['*'],
-
-    'exposed_headers' => false,
-
-    'max_age' => false,
-
-    'supports_credentials' => false,
+    'allowed_headers'          => ['*'],
+    'exposed_headers'          => false,
+    'max_age'                  => false,
+    'supports_credentials'     => false,
 
 ];
