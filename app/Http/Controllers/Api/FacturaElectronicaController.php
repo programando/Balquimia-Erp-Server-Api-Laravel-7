@@ -3,10 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 use App\Models\FacturaElectronica as Facturas;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 
-class FacturaElectronicaController extends Controller
+use DB;
+
+/*
+    App\Http\Controllers\ApiController:  
+            Controlador base desde donde extienden todos los demás controladores
+            Centraliza m{etodos de respuesta
+*/
+
+class FacturaElectronicaController extends ApiController
 {
     public function index() {
         //$DiasFinanciacion   = DB::select(' call ped_dias_financiacion() ');
@@ -16,10 +25,16 @@ class FacturaElectronicaController extends Controller
 
         /**
          * @OA\Get(
-         *     path="/api/facturas",
+         *     path="/facturas",
          *     @OA\Response(response="200", description="Listado de facturas creadas ")
          * )
          */
-        return Facturas::all()->take(10);
+        //$Facturas = Facturas::all()->take(10);
+        //$Facturas =    Facturas::all()->take(10)->first() ;
+        //$Facturas =    Facturas::where('id_fact_elctrnca','<','10')->first() ;
+        $Facturas = DB::select(' call fact_01_enc_errores_envio_dian() ');
+        dd( gettype ( $Facturas)) ;
+         return  $this->showAll(   collect( $Facturas )   );
+        //return collect($Facturas );
     }
 }
