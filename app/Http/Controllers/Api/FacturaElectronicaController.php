@@ -33,7 +33,7 @@ class FacturaElectronicaController extends ApiController
         //$Facturas =    Facturas::all()->take(10)->first() ;
         //$Facturas =    Facturas::where('id_fact_elctrnca','<','10')->first() ;
         $Facturas = DB::select(' call fact_01_enc_errores_envio_dian() ');
-        dd( gettype ( $Facturas)) ;
+         
          return  $this->showAll(   collect( $Facturas )   );
         //return collect($Facturas );
     }
