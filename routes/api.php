@@ -12,15 +12,21 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
+
+DB::listen(function($query) {
+echo "<pre>{$query->sql} - {$query->time}</pre>";
+});
+
 */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
-
-
 Route::post('/register', 'UserController@register');
 Route::post('/login', 'UserController@login');
 Route::post('/logout', 'UserController@logout'); 
-Route::get('facturas','Api\FacturaElectronicaController@index');
+
+Route::get('tables','Api\FacturaElectronicaController@tables');
+Route::get('resolutions','Api\FacturaElectronicaController@resolutions');
+Route::get('invoices','Api\FacturaElectronicaController@invoices');
