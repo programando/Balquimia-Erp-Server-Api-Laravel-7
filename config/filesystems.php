@@ -55,6 +55,18 @@ return [
             'visibility' => 'public',
         ],
 
+        'Files' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/documents'),
+            'visibility' => 'public',
+        ],
+        
+        'Images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/images'),
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

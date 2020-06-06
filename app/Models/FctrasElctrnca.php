@@ -71,7 +71,8 @@ class FctrasElctrnca extends Model
 
 	protected $dates = [
 		'due_date',
-		'rspnse_issue_date'
+		'rspnse_issue_date',
+		'fcha_dcmnto'
 	];
 
 	protected $fillable = [
@@ -82,6 +83,7 @@ class FctrasElctrnca extends Model
 		'type_operation_id',
 		'type_document_id',
 		'resolution_id',
+		'fcha_dcmnto',
 		'due_date',
 		'type_currency_id',
 		'order_reference',
@@ -119,18 +121,21 @@ class FctrasElctrnca extends Model
 		public function emails() {
 			return $this->hasMany(FctrasElctrncasEmailSend::class, 'id_fact_elctrnca');
 		}
-		public function notasBillingReference() {
+		public function noteBillingReference() {
 			return $this->hasMany(FctrasElctrncasNotesBillingReference::class, 'id_fact_elctrnca');
 		}
-		public function notasDiscrepancy() {
+		public function noteDiscrepancy() {
 			return $this->hasMany(FctrasElctrncasNotesDiscrepancyResponse::class, 'id_fact_elctrnca');
 		}
 		
 
 		// SCOPES
 		//=========
-
 			public function scopeInvoicesToSend ( $query ){
-				return $query->Where('rspnse_dian','0');
+				return $query->Where('rspnse_dian','0')->where('type_document_id', '1'); // Facturas
 			}
+			public function scopeCreditNotesToSend ( $query ){
+				return $query->Where('rspnse_dian','0')->where('type_document_id', '5');	// Notas Crédito
+			}
+
 }

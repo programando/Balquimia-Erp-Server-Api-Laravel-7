@@ -11,6 +11,7 @@ class GuzzleHttp {
     public function __construct( ) {
         $this->Guzzle = new Client([
             'base_uri' => env('FACTURA_ELECT_URL_BASE'),
+            'exceptions' => false,
         ]);
          $this->headers     = [
                 'Content-Type'    => 'application/json',

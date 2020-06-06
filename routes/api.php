@@ -29,4 +29,7 @@ Route::post('/logout', 'UserController@logout');
 
 Route::get('tables','Api\FacturaElectronicaController@tables');
 Route::get('resolutions','Api\FacturaElectronicaController@resolutions');
-Route::get('invoices','Api\FacturaElectronicaController@invoices');
+
+Route::get('invoices','Api\FctrasElctrncasInvoicesController@invoices');
+
+Route::get('notes/cr','Api\FctrasElctrncasNotesCrController@creditNotes');

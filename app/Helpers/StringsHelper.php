@@ -14,6 +14,14 @@ class StringsHelper {
             }
       }
 
-
+    public static function UpperTrim( $String, $Long ) {
+        $String = trim( $String );
+        $String = preg_replace('/\s\s+/', ' ', $String  );
+        $String = substr($String, 0, $Long  );
+        $String = mb_strtoupper( $String,'UTF-8');
+        return $String;
+    }
+    
+    
 }
 ?>

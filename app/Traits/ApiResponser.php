@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 use Illuminate\Support\Collection;
+
 trait ApiResponser {
 
    private function succesReponse ( $data, $code ){

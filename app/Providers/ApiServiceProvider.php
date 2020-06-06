@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 
+use Carbon\Carbon;
+use Illuminate\Support\ServiceProvider;
+ 
 class ApiServiceProvider extends ServiceProvider
 {
     /**
@@ -13,12 +15,16 @@ class ApiServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        \App::bind( '/Helpers/DatesHelper.php' );
+        \App::bind( '/Helpers/FilesHelper.php' );
+        \App::bind( '/Helpers/FoldersHelper.php' );
+        \App::bind( '/Helpers/GeneralHelper.php' );
         \App::bind( '/Helpers/NumbersHelper.php' );
         \App::bind( '/Helpers/StringsHelper.php' );
-        \App::bind( '/Librarys/GuzzleHttp.php' );
+        \App::bind( '/Helpers/UsersHelper.php' );
 
+        \App::bind( '/Librarys/GuzzleHttp.php' );
         
- 
     }
 
     /**
@@ -26,8 +32,7 @@ class ApiServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        //
+    public function boot()  {
+       Carbon::setLocale( app()->getLocale());
     }
 }
