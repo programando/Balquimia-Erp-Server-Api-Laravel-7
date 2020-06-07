@@ -34,10 +34,6 @@ class FctrasElctrncasInvoicesController extends ApiController
    private $jsonObject = [] ;
   
  
-        public function resolutions() {
-            return  $this->traitSoenacResolutions();
-        }
-
         public function invoices() {
             $URL = 'invoice/'. env('FACTURA_ELECT_TEST_ID');
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();
