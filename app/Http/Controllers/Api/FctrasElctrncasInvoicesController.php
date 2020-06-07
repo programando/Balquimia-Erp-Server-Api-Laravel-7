@@ -41,7 +41,7 @@ class FctrasElctrncasInvoicesController extends ApiController
  */
  
         public function resolutions() {
-            return "Desde resoluciones";
+            return  $this->traitSoenacResolutions();
         }
 
         public function invoices() {
