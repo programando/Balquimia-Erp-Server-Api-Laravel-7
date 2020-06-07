@@ -32,13 +32,7 @@ class FctrasElctrncasInvoicesController extends ApiController
    use FctrasElctrncasTrait, ApiSoenac;
 
    private $jsonObject = [] ;
-   //private $ApiSoenac ;
- 
-   
-/*         public function __construct ( GuzzleHttp $GuzzleHttps ) {
-            $this->ApiSoenac = $GuzzleHttps;
-        }
- */
+  
  
         public function resolutions() {
             return  $this->traitSoenacResolutions();
@@ -126,7 +120,7 @@ class FctrasElctrncasInvoicesController extends ApiController
             $Totals       = $Factura['total'];
             $CantProducts = $Products->count();
             $CodigoQR     = QrCode::format('png')->size(330)->encoding('UTF-8')->generate($Factura['qr_data']);
-            $Data         = compact('Resolution', 'FchaFactura', 'Fechas', 'Factura','Customer', 'Products','CantProducts', 'Totals','CodigoQR' );
+            $Data         = compact('Resolution', 'Fechas', 'Factura','Customer', 'Products','CantProducts', 'Totals','CodigoQR' );
             $pdf          = App::make('dompdf.wrapper');
             $PdfContent   = $pdf->loadView('pdfs.invoice', $Data )->output();
             Storage:: disk('Files')->put( $FileName, $PdfContent);
