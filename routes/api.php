@@ -31,5 +31,5 @@ Route::get('tables','Api\FacturaElectronicaController@tables');
 Route::get('resolutions','Api\FacturaElectronicaController@resolutions');
 
 Route::get('invoices','Api\FctrasElctrncasInvoicesController@invoices');
-
 Route::get('notes/cr','Api\FctrasElctrncasNotesCrController@creditNotes');
+Route::get('api/resolutions','Api\FctrasElctrncasInvoicesController@resolutions');

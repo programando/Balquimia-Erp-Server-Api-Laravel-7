@@ -40,7 +40,9 @@ class FctrasElctrncasInvoicesController extends ApiController
         }
  */
  
-
+        public function resolutions() {
+            return  $this->traitSoenacResolutions();
+        }
 
         public function invoices() {
             $URL = 'invoice/'. env('FACTURA_ELECT_TEST_ID');
