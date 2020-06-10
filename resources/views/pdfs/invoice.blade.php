@@ -19,6 +19,9 @@
     .t24            { font-size:24pt; line-height:24pt; }
     .t26            { font-size:26pt; line-height:26pt; }
     .t32            { font-size:32pt; line-height:32pt; }
+    .t34            { font-size:34pt; line-height:34pt; }
+    .t36            { font-size:36pt; line-height:36pt; }
+    .t38            { font-size:38pt; line-height:38pt; }
     .mb3            { margin-bottom:3pt; }
     .mb10           { margin-bottom:10pt; }
     .mb15           { margin-bottom:15pt; }
@@ -38,6 +41,7 @@
     .bRad           { border-radius:10pt; }
     .bRad1          { border-radius:10pt 10pt 0 0; }
     .bRad2          { border-radius:0 0 10pt 10pt; }
+    .vatop          { vertical-align:top;}
 </style>
 
   </head>
@@ -53,7 +57,7 @@
                 </td>
               
                 <td width="40%" class="taC">
-                    <div class="t32 tB"> BALQUIMIA S.A.S </div>
+                    <div class="t38 tB"> BALQUIMIA S.A.S </div>
                     <div class="t24">PBX: (+57-2) 488 1616</div>
                     <div class="t24 mb15">Calle 35 #4-31 - Cali - Colombia</div>
                     <div class="">Visita nuestro sitio web:</div>
@@ -121,9 +125,9 @@
 
         <div class="bS1 bRad p20 mb40">
             <table width="100%" class="" >
-                <tr>
+                <tr >
                     <td width="10%" class="p5 tB">Cliente :</td>
-                    <td width="25%" class="p5"> {{ $Customer['name'] }} </td>
+                    <td width="35%" class="p5"> {{ $Customer['name'] }} </td>
                     <td width="10%" class="p5 tB">N.I.T.:</td>
                     <td width="25%" class="p5">{{ $Customer['identification_number'] }}</td>
                     <td width="10%" class="p5 tB">Firmado:</td>
@@ -133,15 +137,15 @@
                     <td width="10%" class="p5 tB">Dirección:</td>
                     <td width="25%" class="p5">{{ $Customer['address'] }}</td>
                     <td width="10%" class="p5 tB">Departamento:</td>
-                    <td width="25%" class="p5">Valle Del Cauca</td>
+                    <td width="25%" class="p5">{{ $Additionals['dpto'] }}</td>
                     <td width="10%" class="p5 tB">Teléfono :</td>
-                    <td width="20%" class="p5">6561732 EXT 109</td>
+                    <td width="20%" class="p5">{{ $Additionals['nro_tlfno'] }}</td>
                 </tr>
                 <tr>
                     <td width="10%" class="p5 tB">Email :</td>
                     <td width="25%" class="p5">{{ $Customer['email'] }}</td>
                     <td width="10%" class="p5 tB">Forma Pago:</td>
-                    <td width="25%" class="p5">Contado</td>
+                    <td width="25%" class="p5">{{ $Additionals['frma_pgo'] }}</td>
 
                 </tr>
 
@@ -154,7 +158,7 @@
                     <td width="15%" class="p105 tB bAzul colorfff bRS1">N° Orden de compra:</td>
                     <td width="35%" class="p105 bRS1">{{ $Factura['order_reference'] }}</td>
                     <td width="15%" class="p105 tB bAzul colorfff  bRS1">Vendedor:</td>
-                    <td width="35%" class="p105">Nombre/Abreviatura vendedor</td>
+                    <td width="35%" class="p105">{{ $Additionals['nom_vnddor'] }}</td>
                 </tr>
             </table>
         </div>
@@ -171,10 +175,10 @@
             <table width="100%">
                 @foreach($Products as $Product )
                     <tr>
-                        <td width="15%" class="p128 bRS1 taC"> {{ $Product['invoiced_quantity'] }}</td>
-                        <td width="55%" class="p128 bRS1"> {{ $Product['description']       }}</td>
-                        <td width="15%" class="p128 bRS1 taR">{{ $Product['price_amount']  }}</td>
-                        <td width="15%" class="p128 taR">{{ $Product['line_extension_amount']  }}</td>
+                        <td width="15%" class="p128 bRS1 taC">  {{ $Product['invoiced_quantity']                             }} </td>
+                        <td width="55%" class="p128 bRS1">      {{ $Product['description']                                   }}</td>
+                        <td width="15%" class="p128 bRS1 taR">  {{ Numbers::invoiceFormat($Product['price_amount'])          }}</td>
+                        <td width="15%" class="p128 taR">       {{ Numbers::invoiceFormat($Product['line_extension_amount']) }}</td>
                     </tr>
                 @endforeach
                 {{ $CantFaltante= 32-$Product['CantProducts'] }}
@@ -188,38 +192,41 @@
                 @endfor 
             </table>
             <table class="bTS1" width="100%">
-                <tr>
+                <tr class="vatop">
+
                     <td width="70%" class="p128 bRS1">
-                        <div class="mb3">
+                    <div class="mb15">
                             <strong>SON:</strong>
-                            CUATRO MILLONES SETECIENTOS SESENTA Y TRES MIL CIENTO VEINTISIETE PESOS TREINTA Y DOS CENTAVOS
+                            {{ $Additionals['vr_letras'] }}
                         </div>
                         <div class="mb15">
                             <strong>CUFE:</strong>
                             {{ $Factura['uuid']}}
                         </div>
+
                         <div class="">
                             <strong>NOTAS:</strong>
-                            {{ $Factura['notes'] }}
+                            {!! $Factura['notes'] !!}
                         </div>
                     </td>
+
                     <td width="30%">
                         <table width="100%">
                             <tr>
                                 <td width="50%" class="p105 tB bRS1 bBS1">SUBTOTAL :</td>
-                                <td width="50%" class="t24 p105 bBS1 taR">{{ $Totals['line_extension_amount'] }}</td>
+                                <td width="50%" class="t24 p105 bBS1 taR">{{ Numbers::invoiceFormat($Totals['line_extension_amount']) }}</td>
                             </tr>
                         </table>
                         <table width="100%">
                             <tr>
                                 <td width="50%" class="p105 tB bRS1 bBS1">IVA</td>
-                                <td width="50%" class="t24 p105 bBS1 taR">{{ $Totals['tax_inclusive_amount'] }}</td>
+                                <td width="50%" class="t24 p105 bBS1 taR">{{ Numbers::invoiceFormat($Additionals['vr_iva']) }}</td>
                             </tr>
                         </table>
                         <table width="100%">
                             <tr>
                                 <td width="50%" class="p105 tB bRS1">TOTAL</td>
-                                <td width="50%" class="t24 p105 taR">{{ $Totals['payable_amount'] }}</td>
+                                <td width="50%" class="t24 p105 taR">{{ Numbers::invoiceFormat($Totals['payable_amount']) }}</td>
                             </tr>
                         </table>
                     </td>
@@ -240,12 +247,13 @@
                                     <td width="20%" class="p5">IMPUESTO</td>
                                 </tr>
                             </table>
+                            
                             <table width="100%">
                                 <tr>
                                     <td width="40%" class="p5 bRS1">IVA</td>
-                                    <td width="20%" class="p5 taR bRS1">6'654.534.00</td>
-                                    <td width="20%" class="p5 taR bRS1">19%</td>
-                                    <td width="20%" class="p5 taR">76'654.534.00</td>
+                                    <td width="20%" class="p5 taR bRS1">{{ Numbers::invoiceFormat($Additionals['vr_base']) }}</td>
+                                    <td width="20%" class="p5 taR bRS1">{{ Numbers::invoiceFormat($Additionals['pctje_iva']) .'%'}}</td>
+                                    <td width="20%" class="p5 taR">{{ Numbers::invoiceFormat($Additionals['vr_iva']) }}</td>
                                 </tr>
                             </table>
                         </div>

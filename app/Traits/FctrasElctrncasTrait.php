@@ -81,6 +81,7 @@ trait FctrasElctrncasTrait {
                  'invoiced_quantity'           => Numbers::jsonFormat ( $Product['invoiced_quantity'], 6),
                  'line_extension_amount'       => Numbers::jsonFormat ($Product['line_extension_amount'], 2),
                  'free_of_charge_indicator'    => $Product['free_of_charge_indicator'],
+                 'tax_totals'                  =>[],
                  'description'                 => $Product['description'],
                  'brand_name'                  => $Product['brand_name'],
                  'model_name'                  => $Product['model_name'],
@@ -88,8 +89,16 @@ trait FctrasElctrncasTrait {
                  'type_item_identification_id' => $Product['type_item_identification_id'],
                  'price_amount'                => Numbers::jsonFormat ($Product['price_amount'],2),
                  'base_quantity'               => Numbers::jsonFormat ($Product['base_quantity'],2)
-               ];     
-             $Productos[] = $Producto ;
+               ];  
+               if ( $Product['tax_amount'] > 0 ){
+                    $Impuestos = [ 
+                                    'tax_id' => 1,
+                                    'tax_amount' => Numbers::jsonFormat ($Product['tax_amount'], 2),
+                                    'taxable_amount' => Numbers::jsonFormat ($Product['taxable_amount'], 2),
+                                    'percent' => Numbers::jsonFormat ($Product['percent'], 2)];
+                    $Producto['tax_totals'][] =  $Impuestos;  
+               }  
+               $Productos[] = $Producto ;
             }
             $jsonObject [$jsonKey] = $Productos;
         }

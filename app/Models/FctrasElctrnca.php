@@ -122,10 +122,13 @@ class FctrasElctrnca extends Model
 			return $this->hasMany(FctrasElctrncasEmailSend::class, 'id_fact_elctrnca');
 		}
 		public function noteBillingReference() {
-			return $this->hasMany(FctrasElctrncasNotesBillingReference::class, 'id_fact_elctrnca');
+			return $this->hasOne(FctrasElctrncasNotesBillingReference::class, 'id_fact_elctrnca');
 		}
 		public function noteDiscrepancy() {
-			return $this->hasMany(FctrasElctrncasNotesDiscrepancyResponse::class, 'id_fact_elctrnca');
+			return $this->hasOne(FctrasElctrncasNotesDiscrepancyResponse::class, 'id_fact_elctrnca');
+		}
+		public function additionals() {
+			return $this->hasOne(FctrasElctrncasAdditional::class, 'id_fact_elctrnca');
 		}
 		
 

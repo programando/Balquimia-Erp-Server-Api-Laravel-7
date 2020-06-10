@@ -57,7 +57,10 @@ class FctrasElctrncasInvoiceLine extends Model
 		'code',
 		'type_item_identification_id',
 		'price_amount',
-		'base_quantity'
+		'base_quantity',
+		'tax_amount',
+		'taxable_amount',
+		'percent'
 	];
 
 	public function fctras_elctrnca()

@@ -9,7 +9,9 @@ class NumbersHelper {
       return number_format ( $value, $decimals, '.', '');
    }
 
-
+   public static function invoiceFormat($value) {
+      return number_format( $value, 0, ",", ".");
+   }
 
 }
 ?>

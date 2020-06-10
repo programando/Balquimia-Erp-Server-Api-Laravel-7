@@ -20,7 +20,8 @@ class EventServiceProvider extends ServiceProvider
         ],
 
        'App\Events\InvoiceWasCreated' => [
-            'App\Listeners\SendXmlPdfToCustomer',
+            'App\Listeners\InvoiceSendXmlPdfToCustomer',
+            'App\Listeners\InvoiceDestroyXmlPdfFiles',
         ],
 
     ];

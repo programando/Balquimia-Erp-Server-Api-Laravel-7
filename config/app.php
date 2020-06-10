@@ -234,6 +234,7 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Folders'      => App\Helpers\FoldersHelper::class,
         'Fechas '      => App\Helpers\DatesHelper::class,
+        'Numbers'       => App\Helpers\NumbersHelper::class,
         'Carbon'       => 'Carbon\Carbon',
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
     ],

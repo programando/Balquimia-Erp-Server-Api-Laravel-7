@@ -17,4 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/mail', function () {
+    return view('mails.facturacion.InvoiceToCustumer');
+});
+
 Route::get('invoices/pdf/{id}', 'Api\FctrasElctrncasInvoicesController@invoiceSendToCustomer');

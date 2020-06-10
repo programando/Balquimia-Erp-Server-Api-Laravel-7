@@ -3,8 +3,9 @@
 namespace App\Traits;
 
 use App\Librarys\GuzzleHttp;
+use App\Models\FctrasElctrncasMcipio;
  
-
+use Cache;
 trait ApiSoenac {
    public $ApiSoenac ;
 
@@ -13,7 +14,12 @@ trait ApiSoenac {
       }
 
       public function traitSoenacResolutions() {
-         return    $this->ApiSoenac->getRequest('config/resolutions' ) ;
+         $Resoluciones = Cache::tags('Resoluciones')
+                      ->rememberForEver('Resoluciones', function() {
+                             return $this->ApiSoenac->getRequest('config/resolutions' ) ; 
+                        }
+                      );
+         return  $Resoluciones  ;
       }
 
       public function traitSoenacResolutionsInvoice() {

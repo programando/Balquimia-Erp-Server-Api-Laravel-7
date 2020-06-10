@@ -2,19 +2,28 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\InvoiceWasCreated;
-use App\Helpers\DatesHelper as Fecha;
-use App\Helpers\FoldersHelper as Folders;
-use App\Helpers\GeneralHelper as Generales;
-use App\Http\Controllers\ApiController;
-use App\Librarys\GuzzleHttp;
-use App\Models\FctrasElctrnca   ;
-use App\Models\FctrasElctrncasMcipio;
 use App\Traits\ApiSoenac;
-use App\Traits\FctrasElctrncasTrait;
+use App\Librarys\GuzzleHttp;
 use Illuminate\Http\Request;
+
+use App\Events\InvoiceWasCreated;
+
+use App\Models\FctrasElctrnca   ;
+
 use Illuminate\Support\Collection;
+
 use Illuminate\Support\Facades\App;
+use App\Traits\FctrasElctrncasTrait;
+
+use App\Helpers\DatesHelper as Fecha;
+use App\Models\FctrasElctrncasMcipio;
+
+use App\Jobs\InvoiceSendFilesEmailJob;
+
+use App\Http\Controllers\ApiController;
+use App\Helpers\FoldersHelper as Folders;
+
+use App\Helpers\GeneralHelper as Generales;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 Use Storage;
@@ -39,8 +48,8 @@ class FctrasElctrncasInvoicesController extends ApiController
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();
             foreach ($Documentos as $Documento ) {
                 $this->invoicesToSend ( $Documento) ;
-                return $this->jsonObject ;
-                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;
+                //return $this->jsonObject ;
+                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;          
                 $this->traitUpdateJsonObject ( $Documento );
                 $this->documentsProcessReponse( $Documento, $response ) ;
             }  
@@ -96,35 +105,41 @@ class FctrasElctrncasInvoicesController extends ApiController
             }
         }
        public function invoiceSendToCustomer ( $id_fact_elctrnca ) {
-          $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
-          $Factura      = $Factura[0];
+          $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
+          $Factura      = $Factura[0];        
           $this->invoiceCreateFilesToSend  ( $id_fact_elctrnca,  $Factura  ); 
-          InvoiceWasCreated::dispatch( $Factura  ) ; // Disparo evento para el evío de correos con archivos creados.
+          //InvoiceWasCreated::dispatch ( $Factura ) ;  // ->delay(now()->addSeconds(25)
+          InvoiceSendFilesEmailJob::dispatch( ) ;//->delay(now()->addSeconds(5));
        }
 
         private function invoiceCreateFilesToSend ( $id_fact_elctrnca,  $Factura  ){
-                $Resolution   = $this->traitSoenacResolutionsInvoice();
-                $this->saveInvoicePfdFile ( $Resolution, $Factura );
-                $this->saveInvoiceXmlFile ( $Factura );
+                $Resolution   = $this->traitSoenacResolutionsInvoice();                
+
+                $this->saveInvoicePfdFile   ( $Resolution, $Factura );
+                $this->saveInvoiceXmlFile   ( $Factura              );
+                 
         }
 
-        private function saveInvoicePfdFile  ( $Resolution, $Factura   ){
+        private function saveInvoicePfdFile  ( $Resolution, $Factura   ){           
             $FileName     = $Factura['xml_file_name'].'.pdf';
             $Fechas       = $this->FechasFactura ( $Factura['fcha_dcmnto'], $Factura['due_date'] );
             $Customer     = $Factura['customer'];
             $Products     = $Factura['products'];
             $Totals       = $Factura['total'];
+            $Additionals  = $Factura['additionals'];
             $CantProducts = $Products->count();
-            $CodigoQR     = QrCode::format('png')->size(330)->encoding('UTF-8')->generate($Factura['qr_data']);
-            $Data         = compact('Resolution', 'Fechas', 'Factura','Customer', 'Products','CantProducts', 'Totals','CodigoQR' );
+            
+            $CodigoQR     = QrCode::format('png')->size(330)->encoding('UTF-8')->generate( $Factura['qr_data'] );
+            $Data         = compact('Resolution', 'Fechas', 'Factura','Customer', 'Products','CantProducts', 'Totals','CodigoQR', 'Additionals' );
             $pdf          = App::make('dompdf.wrapper');
             $PdfContent   = $pdf->loadView('pdfs.invoice', $Data )->output();
-            Storage:: disk('Files')->put( $FileName, $PdfContent);
+            Storage::disk('Files')->put( $FileName, $PdfContent);
+            
         }
 
         private function saveInvoiceXmlFile ( $Factura) {
             $base64_bytes = $Factura['attached_document_base64_bytes'];
-            $FileName = $Factura['xml_file_name'].'.xml'; 
+            $FileName     = $Factura['xml_file_name'].'.xml';
             Storage::disk('Files')->put( $FileName, base64_decode($base64_bytes));
         }
 
