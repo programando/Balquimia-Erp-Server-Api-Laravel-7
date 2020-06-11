@@ -6,23 +6,16 @@ use App\Traits\ApiSoenac;
 use App\Librarys\GuzzleHttp;
 use Illuminate\Http\Request;
 
-use App\Events\InvoiceWasCreated;
-
 use App\Models\FctrasElctrnca   ;
-
 use Illuminate\Support\Collection;
-
+use App\Jobs\InvoiceDeleteFilesJob;
 use Illuminate\Support\Facades\App;
 use App\Traits\FctrasElctrncasTrait;
-
 use App\Helpers\DatesHelper as Fecha;
 use App\Models\FctrasElctrncasMcipio;
-
-use App\Jobs\InvoiceSendFilesEmailJob;
-
+use App\Events\InvoiceWasCreatedEvent;
 use App\Http\Controllers\ApiController;
 use App\Helpers\FoldersHelper as Folders;
-
 use App\Helpers\GeneralHelper as Generales;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -40,7 +33,7 @@ class FctrasElctrncasInvoicesController extends ApiController
 {
    use FctrasElctrncasTrait, ApiSoenac;
 
-   private $jsonObject = [] ;
+   private $jsonObject = [], $PdfFile, $XmlFile ;
   
  
         public function invoices() {
@@ -106,22 +99,20 @@ class FctrasElctrncasInvoicesController extends ApiController
         }
        public function invoiceSendToCustomer ( $id_fact_elctrnca ) {
           $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
-          $Factura      = $Factura[0];        
+          $Factura      = $Factura[0];  
+          $this->getNameFiles($Factura );
           $this->invoiceCreateFilesToSend  ( $id_fact_elctrnca,  $Factura  ); 
-          //InvoiceWasCreated::dispatch ( $Factura ) ;  // ->delay(now()->addSeconds(25)
-          InvoiceSendFilesEmailJob::dispatch( ) ;//->delay(now()->addSeconds(5));
+          InvoiceWasCreatedEvent::dispatch ( $Factura ) ;  
+          //InvoiceDeleteFilesJob::dispatch($this->PdfFile,$this->XmlFile )->delay(now()->addMinutes(5));
        }
 
         private function invoiceCreateFilesToSend ( $id_fact_elctrnca,  $Factura  ){
-                $Resolution   = $this->traitSoenacResolutionsInvoice();                
-
-                $this->saveInvoicePfdFile   ( $Resolution, $Factura );
-                $this->saveInvoiceXmlFile   ( $Factura              );
-                 
+            $Resolution   = $this->traitSoenacResolutionsInvoice();                
+            $this->saveInvoicePfdFile   ( $Resolution, $Factura );
+            $this->saveInvoiceXmlFile   ( $Factura              );
         }
 
         private function saveInvoicePfdFile  ( $Resolution, $Factura   ){           
-            $FileName     = $Factura['xml_file_name'].'.pdf';
             $Fechas       = $this->FechasFactura ( $Factura['fcha_dcmnto'], $Factura['due_date'] );
             $Customer     = $Factura['customer'];
             $Products     = $Factura['products'];
@@ -133,14 +124,12 @@ class FctrasElctrncasInvoicesController extends ApiController
             $Data         = compact('Resolution', 'Fechas', 'Factura','Customer', 'Products','CantProducts', 'Totals','CodigoQR', 'Additionals' );
             $pdf          = App::make('dompdf.wrapper');
             $PdfContent   = $pdf->loadView('pdfs.invoice', $Data )->output();
-            Storage::disk('Files')->put( $FileName, $PdfContent);
-            
+            Storage::disk('Files')->put( $this->PdfFile, $PdfContent);
         }
 
         private function saveInvoiceXmlFile ( $Factura) {
             $base64_bytes = $Factura['attached_document_base64_bytes'];
-            $FileName     = $Factura['xml_file_name'].'.xml';
-            Storage::disk('Files')->put( $FileName, base64_decode($base64_bytes));
+            Storage::disk('Files')->put( $this->XmlFile, base64_decode($base64_bytes));
         }
 
         private function FechasFactura ( $FechaFactura, $FechaVencimiento) {
@@ -158,6 +147,10 @@ class FctrasElctrncasInvoicesController extends ApiController
             return $Fechas;
         }
 
+        private function getNameFiles( $Factura) {
+                $this->PdfFile     = $Factura['document_number'].'.pdf';
+                $this->XmlFile     = $Factura['document_number'].'.xml';
+        }
 
 
     

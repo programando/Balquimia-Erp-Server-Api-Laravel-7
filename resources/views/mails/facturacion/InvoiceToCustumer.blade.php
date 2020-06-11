@@ -8,14 +8,14 @@
  
 </head>
 <!--  -->
-   <div style="max-width: 800px; font-family:Arial, Helvetica, sans-serif !important; width:90% !important; margin:0 auto !important; background:#f6f4f9 !important; padding:30px;" >
+   <div style="max-width: 800px; font-family:Arial, Helvetica, sans-serif !important; width:90% !important; margin:0 auto !important; background:#F5F5F5 !important; padding:30px;" >
 
          <div style="text-align:center;  margin-bottom:30px;">                     
                <div style="font-weight:bold;font-size:20px; line-height:30px;"> BALQUIMIA S.A.S  </div>
                <div class="font-weight:bold;font-size:12px; line-height:15px;">PBX: (+57-2) 488 1616</div>
                <div class="font-weight:bold;font-size:12px; line-height:15px;">Calle 35 #4-31 - Cali - Colombia</div>
                <br>
-               <div><h3>Ha generado el siguiente documento electrónico:</h3></div>
+               <div><h3>Hemos generado el siguiente documento electrónico:</h3></div>
          </div>
 
          <table width="100%" style="width:100%; margin:0 auto; border-collapse: collapse; ">

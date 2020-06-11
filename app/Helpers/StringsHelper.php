@@ -22,6 +22,7 @@ class StringsHelper {
         return $String;
     }
     
+
     
 }
 ?>

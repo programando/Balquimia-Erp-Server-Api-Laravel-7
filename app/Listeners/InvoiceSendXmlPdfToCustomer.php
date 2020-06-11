@@ -2,24 +2,32 @@
 
 namespace App\Listeners;
 
-use App\Events\InvoiceWasCreated;
-use App\Mail\InvoiceSendToCustomerMail;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
+use App\Events\InvoiceWasCreatedEvent;
+use App\Mail\InvoiceSendToCustomerMail;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Storage;
-class InvoiceSendXmlPdfToCustomer implements ShouldQueue
+class InvoiceSendXmlPdfToCustomer
 {
- 
-    public function handle(InvoiceWasCreated $event) {
-           
-        Mail::to('jhonjamesmg@hotmail.com')
-                  ->queue(new InvoiceSendToCustomerMail(
+    public function handle(InvoiceWasCreatedEvent $event) {
+        $Emails = $this->getAcountsToSendEmail ( $event->Factura['emails'] );
+        $when   = now()->addSeconds(10);
+        Mail::to( $Emails )
+                 ->cc('jhonjamesmg@hotmail.com')
+                  ->later( $when,new InvoiceSendToCustomerMail(
                             $event->Factura ,
                             $event->FilePdf, $event->FileXml, 
                             $event->PathPdf, $event->PathXml
                             ));
-
     }
+
+
+    private function getAcountsToSendEmail( $Emails ) {
+         foreach ($Emails as $email) {
+             $Enviar[]=$email['email'];
+         }
+         return $Enviar;
+    }
+
 }

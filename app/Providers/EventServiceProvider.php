@@ -18,12 +18,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-
-       'App\Events\InvoiceWasCreated' => [
+       'App\Events\InvoiceWasCreatedEvent' => [
             'App\Listeners\InvoiceSendXmlPdfToCustomer',
-            'App\Listeners\InvoiceDestroyXmlPdfFiles',
         ],
-
     ];
 
     /**

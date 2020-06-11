@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class InvoiceWasCreated
+class InvoiceWasCreatedEvent
 {
     use Dispatchable,  SerializesModels;
     
@@ -20,12 +20,11 @@ class InvoiceWasCreated
     public function __construct( $Factura )  {
          $this->Factura = $Factura ;
          $this->getFileNames();
-         
     }
 
     private function getFileNames(){     
-         $this->FilePdf = $this->Factura['xml_file_name']. '.pdf' ;
-         $this->FileXml = $this->Factura['xml_file_name']. '.xml' ;
+         $this->FilePdf = $this->Factura['document_number']. '.pdf' ;
+         $this->FileXml = $this->Factura['document_number']. '.xml' ;
          $this->PathPdf = Storage::disk('Files')->path( $this->FilePdf  );
          $this->PathXml = Storage::disk('Files')->path( $this->FileXml );
     }

@@ -140,5 +140,10 @@ class FctrasElctrnca extends Model
 			public function scopeCreditNotesToSend ( $query ){
 				return $query->Where('rspnse_dian','0')->where('type_document_id', '5');	// Notas Crédito
 			}
-
-}
+			
+		// ACCESORS
+		//=========
+			public function getDocumentNumberAttribute( $value ){
+				return trim($value);
+			}
+	}
