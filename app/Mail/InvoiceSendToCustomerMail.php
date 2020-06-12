@@ -31,7 +31,7 @@ class InvoiceSendToCustomerMail extends Mailable
      */
     public function build()  {
          
-         return $this->view('mails.facturacion.InvoiceToCustumer')
+         return $this->view('mails.invoices.ToCustomer')
                     ->attach($this->PathPdf, [ 'as' => $this->FilePdf, 'mime' => 'application/pdf'])
                     ->attach($this->PathXml, [ 'as' => $this->FileXml, 'mime' => 'application/xml']);
                 

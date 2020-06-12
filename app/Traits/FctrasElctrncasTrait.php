@@ -3,6 +3,7 @@
 namespace App\Traits;
  
 use App\Models\FctrasElctrnca;
+use Illuminate\Support\Facades\Hash;
 use App\Helpers\NumbersHelper as Numbers;
 use App\Helpers\StringsHelper as Strings;
 use App\Models\FctrasElctrncasErrorsMessage;
@@ -69,7 +70,6 @@ trait FctrasElctrncasTrait {
                 'allowance_total_amount' => Numbers::jsonFormat($Totals  ['allowance_total_amount'],2),
                 'charge_total_amount'    => Numbers::jsonFormat($Totals  ['charge_total_amount'],2),
                 'payable_amount'         => Numbers::jsonFormat($Totals  ['payable_amount'],2),
-
             ];      
         }
 
@@ -128,6 +128,7 @@ trait FctrasElctrncasTrait {
             $Registro['pdf_base64_bytes']                  = $dataResponse['pdf_base64_bytes'];
             $Registro['zip_base64_bytes']                  = $dataResponse['zip_base64_bytes'];
             $Registro['dian_response_base64_bytes']        = $dataResponse['dian_response_base64_bytes'];
+            $Registro['cstmer_token']                      = Str::random(60);  
             $Registro->save();
         }
 

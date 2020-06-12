@@ -104,7 +104,9 @@ class FctrasElctrnca extends Model
 		'attached_document_base64_bytes',
 		'pdf_base64_bytes',
 		'zip_base64_bytes',
-		'dian_response_base64_bytes'
+		'dian_response_base64_bytes',
+		'cstmer_rspnse',
+		'cstmer_rspnse_date'
 	];
 
 

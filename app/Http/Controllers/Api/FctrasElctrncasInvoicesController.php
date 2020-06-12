@@ -147,17 +147,30 @@ class FctrasElctrncasInvoicesController extends ApiController
             return $Fechas;
         }
 
+
         private function getNameFiles( $Factura) {
                 $this->PdfFile     = $Factura['document_number'].'.pdf';
                 $this->XmlFile     = $Factura['document_number'].'.xml';
         }
 
 
-    
+        public function invoiceAccepted ( $Token ) {          
+            $this->customerResponse ( $Token, 'ACEPTADA');
+        }
 
+        public function invoiceRejected ( $Token  ){
+            $this->customerResponse ( $Token, 'RECHAZADA');
+        }
  
  
-
+        private function customerResponse ( $Token, $Reponse ) {
+            $Factura      = FctrasElctrnca::where('cstmer_token', "$Token")->first();
+            if ( empty( $Factura['cstmer_rspnse'] ) ) {
+                $Factura->cstmer_rspnse      = $Reponse;
+                $Factura->cstmer_rspnse_date = now();
+                $Factura->update();
+            } 
+        }
  
    
  

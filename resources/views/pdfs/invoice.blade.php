@@ -136,8 +136,8 @@
                 <tr>
                     <td width="10%" class="p5 tB">Dirección:</td>
                     <td width="25%" class="p5">{{ $Customer['address'] }}</td>
-                    <td width="10%" class="p5 tB">Departamento:</td>
-                    <td width="25%" class="p5">{{ $Additionals['dpto'] }}</td>
+                    <td width="10%" class="p5 tB">Municipio:</td>
+                    <td width="25%" class="p5">{{ $Additionals['mcipio'] . ' - '. $Additionals['dpto'] }}</td>
                     <td width="10%" class="p5 tB">Teléfono :</td>
                     <td width="20%" class="p5">{{ $Additionals['nro_tlfno'] }}</td>
                 </tr>
