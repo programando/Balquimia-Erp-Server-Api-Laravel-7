@@ -2,11 +2,14 @@
 
 namespace App\Traits;
  
+use Illuminate\Support\Str;
 use App\Models\FctrasElctrnca;
 use Illuminate\Support\Facades\Hash;
+use App\Helpers\DatesHelper as Fecha;
 use App\Helpers\NumbersHelper as Numbers;
 use App\Helpers\StringsHelper as Strings;
 use App\Models\FctrasElctrncasErrorsMessage;
+
 
 trait FctrasElctrncasTrait {
     
@@ -43,6 +46,26 @@ trait FctrasElctrncasTrait {
                }
          }
 
+      protected function traitDocumentHeader($Document , &$jsonObject ) {      
+            $jsonObject= [
+                'billing_reference'    => [],
+                'discrepancy_response' => [],
+                'number'               => $Document["number"],
+                'sync'                 => true,
+                'send'                 => true,
+                'type_document_id'     => $Document["type_document_id"],
+                'type_operation_id'    => $Document["type_operation_id"],
+                'resolution_id'        => $Document["resolution_id"],
+                'due_date'             => Fecha::YMD ( $Document["due_date"] ),
+                'type_currency_id'     => $Document["type_currency_id"],
+                'payment_form_id'      => $Document["payment_form_id"],
+                'payment_method_id'    => $Document["payment_method_id"],
+                'payment_due_date'     => Fecha::YMD($Document["due_date"]),
+                'duration_measure'     => $Document["duration_measure"],
+                'cc'                   => [],
+                ] ;
+      }
+
         protected function traitCustomer( $Customer, &$jsonObject  ) {
             $jsonObject['customer'] =[
                 'identification_number'           => $Customer['identification_number'],
@@ -76,7 +99,7 @@ trait FctrasElctrncasTrait {
         protected function traitInvoiceLines( $Products, &$jsonObject, $jsonKey  ) {
             $Productos = [];          
             foreach ($Products as $Product) {
-             $Producto = [
+             $ProductToCreate = [
                  'unit_measure_id'             => $Product['unit_measure_id'],
                  'invoiced_quantity'           => Numbers::jsonFormat ( $Product['invoiced_quantity'], 6),
                  'line_extension_amount'       => Numbers::jsonFormat ($Product['line_extension_amount'], 2),
@@ -90,17 +113,21 @@ trait FctrasElctrncasTrait {
                  'price_amount'                => Numbers::jsonFormat ($Product['price_amount'],2),
                  'base_quantity'               => Numbers::jsonFormat ($Product['base_quantity'],2)
                ];  
-               if ( $Product['tax_amount'] > 0 ){
-                    $Impuestos = [ 
-                                    'tax_id' => 1,
-                                    'tax_amount' => Numbers::jsonFormat ($Product['tax_amount'], 2),
-                                    'taxable_amount' => Numbers::jsonFormat ($Product['taxable_amount'], 2),
-                                    'percent' => Numbers::jsonFormat ($Product['percent'], 2)];
-                    $Producto['tax_totals'][] =  $Impuestos;  
-               }  
-               $Productos[] = $Producto ;
+                $this->productTaxAmount( $Product, $ProductToCreate  );
+                $Productos[] = $ProductToCreate ;
             }
             $jsonObject [$jsonKey] = $Productos;
+        }
+
+        private function productTaxAmount( &$Product, &$ObjProducto ){
+            if ( $Product['tax_amount'] > 0 ) {
+                $Impuestos = [ 
+                    'tax_id'         => 1,
+                    'tax_amount'     => Numbers::jsonFormat ($Product['tax_amount'], 2),
+                    'taxable_amount' => Numbers::jsonFormat ($Product['taxable_amount'], 2),
+                    'percent'        => Numbers::jsonFormat ($Product['percent'], 2)];
+                $ObjProducto['tax_totals'][] =  $Impuestos; 
+            }
         }
 
         protected function traitUpdateJsonObject ( $Documento ) {
@@ -133,8 +160,27 @@ trait FctrasElctrncasTrait {
         }
 
         protected function traitdocumentErrorResponse ( $id_fact_elctrnca, $dataResponse ){ 
+            FctrasElctrncasErrorsMessage::where('id_fact_elctrnca', $id_fact_elctrnca)->delete(); 
+            if ( array_key_exists('errors',$dataResponse) ) {
+                $this->validationErrorResponse ($dataResponse , $id_fact_elctrnca );
+            }
+            if ( array_key_exists('errors_messages',$dataResponse) ) {
+                $this->validationDianErrorResponse ($dataResponse , $id_fact_elctrnca );
+            }         
+        }
+
+        private function validationErrorResponse (  $dataResponse, $id_fact_elctrnca ){
+            $errors = $dataResponse['errors'];
+            foreach ($errors as $error ) {
+                $ErrorResponse = new FctrasElctrncasErrorsMessage();
+                $ErrorResponse->id_fact_elctrnca = $id_fact_elctrnca;
+                $ErrorResponse->error_message    = $error[0] ;
+                $ErrorResponse->save();
+            }
+        }
+        
+        private function validationDianErrorResponse (  $dataResponse, $id_fact_elctrnca ){
             $errors = $dataResponse['errors_messages'];
-            FctrasElctrncasErrorsMessage::where('id_fact_elctrnca', $id_fact_elctrnca)->delete();
             foreach ($errors as $error ) {
                 $ErrorResponse = new FctrasElctrncasErrorsMessage();
                 $ErrorResponse->id_fact_elctrnca = $id_fact_elctrnca;
@@ -142,5 +188,6 @@ trait FctrasElctrncasTrait {
                 $ErrorResponse->save();
             }
         }
+        
 
 }

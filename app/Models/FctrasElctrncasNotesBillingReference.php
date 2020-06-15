@@ -31,7 +31,7 @@ class FctrasElctrncasNotesBillingReference extends Model
 		'id_fact_elctrnca' => 'int',
 		'number' => 'int'
 	];
-
+ 
 	protected $dates = [
 		'issue_date'
 	];

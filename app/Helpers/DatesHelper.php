@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class DatesHelper {
 
-
+ 
    public static function YMD( $value ) {
         return date_format($value, 'Y-m-d');
    }
@@ -14,6 +14,21 @@ class DatesHelper {
    public static function DMY( $value ) {
         return date_format($value, 'd/mm/Y');
    }
+
+    private function checkStringDate(  $value){
+      if (date('d-m-Y', strtotime( $value )) == $value ) {
+        $this->Fecha = $value;
+        } else {
+            return false;
+        }
+    }
+
+/* $fecha = "2018-03-29 15:20:40";
+
+$dt = new DateTime($fecha);
+print $dt->format('d/m/Y'); // imprime 29/03/2018
+ */
+
 
      /* ENERO 21 2019
         VALIDA QUE LA FECHA DE DESPACHO SEA VALIDA */
@@ -25,6 +40,7 @@ class DatesHelper {
         }
         return Carbon::parse( $FechaDespacho );
     }
+
     
 }
 ?>

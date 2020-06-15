@@ -11,7 +11,7 @@ use Illuminate\Support\Collection;
 use App\Jobs\InvoiceDeleteFilesJob;
 use Illuminate\Support\Facades\App;
 use App\Traits\FctrasElctrncasTrait;
-use App\Helpers\DatesHelper as Fecha;
+
 use App\Models\FctrasElctrncasMcipio;
 use App\Events\InvoiceWasCreatedEvent;
 use App\Http\Controllers\ApiController;
@@ -52,51 +52,35 @@ class FctrasElctrncasInvoicesController extends ApiController
             $this->jsonObject = [];
             $id_fact_elctrnca = $Facturas['id_fact_elctrnca'];    
             $otherDataInvoice = FctrasElctrnca::with('customer','total', 'products', 'emails')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
-            $Customer         = $otherDataInvoice[0]['customer'];
-            $Total            = $otherDataInvoice[0]['total'];
-            $Products         = $otherDataInvoice[0]['products'];
-            $Emails           = $otherDataInvoice[0]['emails'];
-            $this-> jsonObjectCreate ($Facturas , $Customer, $Total , $Products , $Emails  );
+            $this-> jsonObjectCreate ($Facturas , $otherDataInvoice     );
         }
 
-        private function jsonObjectCreate ( $invoce, $Customer, $Total , $Products, $Emails  ) {
-                $this->headerInvoice                    ( $invoce    );
-                $this->traitEmailSend                   ( $Emails    , $this->jsonObject   );
+        private function jsonObjectCreate ( $invoce,  $Others ) {
+                $this->traitDocumentHeader              ( $invoce , $this->jsonObject    );
+                $this->traitEmailSend                   ( $Others[0]['emails']    , $this->jsonObject   );
                 $this->traitNotes                       ( $invoce    , $this->jsonObject   );
                 $this->traitOrderReference              ( $invoce    , $this->jsonObject   );
                 $this->traitReceiptDocumentReference    ( $invoce    , $this->jsonObject   );
-                $this->traitCustomer                    ( $Customer  , $this->jsonObject   );
-                $this->traitLegalMonetaryTotals         ( $Total     , $this->jsonObject );
-                $this->traitInvoiceLines                ( $Products  , $this->jsonObject, 'invoice_lines'   );
+                $this->traitCustomer                    ( $Others[0]['customer']  , $this->jsonObject   );
+                $this->traitLegalMonetaryTotals         ( $Others[0]['total']     , $this->jsonObject );
+                $this->traitInvoiceLines                ( $Others[0]['products']  , $this->jsonObject, 'invoice_lines'   );
+                unset( $this->jsonObject['billing_reference']);
+                unset( $this->jsonObject['discrepancy_response']);// No los necesito para facturas
             }
 
-        private function headerInvoice( $invoce ) {        
-            $this->jsonObject= [
-                'number'            => $invoce["number"],
-                'sync'              => true,
-                'send'              => true,
-                'type_document_id'  => $invoce["type_document_id"],
-                'type_operation_id' => $invoce["type_operation_id"],
-                'resolution_id'     => $invoce["resolution_id"],
-                'due_date'          => Fecha::YMD ( $invoce["due_date"] ),
-                'type_currency_id'  => $invoce["type_currency_id"],
-                'payment_form_id'   => $invoce["payment_form_id"],
-                'payment_method_id' => $invoce["payment_method_id"],
-                'payment_due_date'  => Fecha::YMD($invoce["due_date"]),
-                'duration_measure'  => $invoce["duration_measure"],
-                'cc'                => [],
-                ] ;
-        }
-  
+ 
         private  function documentsProcessReponse($Documento,  $response ){
-            $id_fact_elctrnca           = $Documento['id_fact_elctrnca']  ;  
-            if ( $response['is_valid'] == true ) {
-                $this->traitDocumentSuccessResponse ( $id_fact_elctrnca, $response );             
-                $this->invoiceSendToCustomer ( $id_fact_elctrnca );
+            $id_fact_elctrnca           = $Documento['id_fact_elctrnca']  ;
+            if ( array_key_exists('is_valid',$response) ) {
+                if ( $response['is_valid'] == true || is_null( $response['is_valid'] ) ) {
+                    $this->traitDocumentSuccessResponse ( $id_fact_elctrnca, $response );             
+                     $this->invoiceSendToCustomer ( $id_fact_elctrnca );
+                }
             } else {
                 $this->traitdocumentErrorResponse( $id_fact_elctrnca, $response ); 
             }
         }
+        
        public function invoiceSendToCustomer ( $id_fact_elctrnca ) {
           $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
           $Factura      = $Factura[0];  
