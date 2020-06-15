@@ -140,10 +140,12 @@ class FctrasElctrncasInvoicesController extends ApiController
 
         public function invoiceAccepted ( $Token ) {          
             $this->customerResponse ( $Token, 'ACEPTADA');
+            return redirect('/');
         }
 
         public function invoiceRejected ( $Token  ){
             $this->customerResponse ( $Token, 'RECHAZADA');
+            return redirect('/');
         }
  
  
