@@ -29,4 +29,4 @@ Route::post('/logout', 'UserController@logout');
 
 Route::get('invoices','Api\FctrasElctrncasInvoicesController@invoices');
 
-Route::get('notes/cr','Api\FctrasElctrncasNotesCrController@creditNotes');
+Route::get('notes/{tpNote}','Api\FctrasElctrncasNotesCrController@notes');

@@ -85,8 +85,8 @@ trait FctrasElctrncasTrait {
             ];
         }
         
-        protected function traitLegalMonetaryTotals ( $Totals, &$jsonObject  ) {
-            $jsonObject['legal_monetary_totals'] =[
+        protected function traitLegalMonetaryTotals ( $Totals, &$jsonObject, $key  ) {
+            $jsonObject[$key] =[
                 'line_extension_amount'  => Numbers::jsonFormat($Totals['line_extension_amount'],2),
                 'tax_exclusive_amount'   => Numbers::jsonFormat($Totals  ['tax_exclusive_amount'],2),
                 'tax_inclusive_amount'   => Numbers::jsonFormat($Totals  ['tax_inclusive_amount'],2),
@@ -96,6 +96,7 @@ trait FctrasElctrncasTrait {
             ];      
         }
 
+ 
         protected function traitInvoiceLines( $Products, &$jsonObject, $jsonKey  ) {
             $Productos = [];          
             foreach ($Products as $Product) {
