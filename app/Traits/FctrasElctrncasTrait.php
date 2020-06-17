@@ -52,7 +52,7 @@ trait FctrasElctrncasTrait {
                 'discrepancy_response' => [],
                 'number'               => $Document["number"],
                 'sync'                 => true,
-                'send'                 => true,
+                'send'                 => false,
                 'type_document_id'     => $Document["type_document_id"],
                 'type_operation_id'    => $Document["type_operation_id"],
                 'resolution_id'        => $Document["resolution_id"],
