@@ -25,7 +25,7 @@ trait ApiSoenac {
       public function traitSoenacResolutionsInvoice() {
          $Resolutions =   $this->ApiSoenac->getRequest('config/resolutions' ) ;
          foreach ($Resolutions as $Resolution) {
-            if ( $Resolution['type_document_id'] === 1 ){
+            if ( $Resolution['type_document_id'] === 4 ){
                return $Resolution;
             }
          }
