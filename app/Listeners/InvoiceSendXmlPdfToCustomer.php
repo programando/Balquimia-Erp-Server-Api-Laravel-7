@@ -12,9 +12,10 @@ class InvoiceSendXmlPdfToCustomer
 {
     public function handle(InvoiceWasCreatedEvent $event) {
         $Emails = $this->getAcountsToSendEmail ( $event->Factura['emails'] );
-        $when   = now()->addSeconds(10);
+        $when   = now()->addSeconds(5);
         Mail::to( $Emails )
                  ->cc('jhonjamesmg@hotmail.com')
+                 ->cc('alimentaria@balquimia.com')
                   ->later( $when,new InvoiceSendToCustomerMail(
                             $event->Factura ,
                             $event->FilePdf, $event->FileXml, 

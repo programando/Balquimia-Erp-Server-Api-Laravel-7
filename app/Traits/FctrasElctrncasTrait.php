@@ -51,7 +51,7 @@ trait FctrasElctrncasTrait {
                 'billing_reference'    => [],
                 'discrepancy_response' => [],
                 'number'               => $Document["number"],
-                'sync'                 => true,
+                'sync'                 => false,
                 'send'                 => true,
                 'type_document_id'     => $Document["type_document_id"],
                 'type_operation_id'    => $Document["type_operation_id"],
