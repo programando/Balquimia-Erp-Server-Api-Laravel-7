@@ -53,8 +53,7 @@
         <table width="100%" class="mb40">
             <tr>
                 <td width="30%">
-                    {{ Folders::Images('balquimia/logo.jpg') }}
-                   <!-- <img src="{{ Folders::Images('balquimia/logo.jpg') }} " alt=""> -->
+                   <img src="{{ Folders::Images('balquimia/logo.jpg') }} " alt="">
                 </td>
               
                 <td width="40%" class="taC">
