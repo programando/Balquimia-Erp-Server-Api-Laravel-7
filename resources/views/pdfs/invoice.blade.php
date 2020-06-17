@@ -53,7 +53,7 @@
         <table width="100%" class="mb40">
             <tr>
                 <td width="30%">
-                   <img src="{{ Folders::Images('balquimia/logo.jpg') }} " alt="">
+                   <img src="https://api.plusoft.co/storage/images/balquimia/logo.jpg" alt="">
                    {{ Folders::Images('balquimia/logo.jpg') }}
                 </td>
               
