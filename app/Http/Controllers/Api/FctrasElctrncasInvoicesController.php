@@ -62,7 +62,7 @@ class FctrasElctrncasInvoicesController extends ApiController
                 $this->traitOrderReference              ( $invoce    , $this->jsonObject   );
                 $this->traitReceiptDocumentReference    ( $invoce    , $this->jsonObject   );
                 $this->traitCustomer                    ( $Others[0]['customer']  , $this->jsonObject   );
-                $this->traitLegalMonetaryTotals         ( $Others[0]['total']     , $this->jsonObject );
+                $this->traitLegalMonetaryTotals         ( $Others[0]['total']     , $this->jsonObject, 'legal_monetary_totals' );
                 $this->traitInvoiceLines                ( $Others[0]['products']  , $this->jsonObject, 'invoice_lines'   );
                 unset( $this->jsonObject['billing_reference']);
                 unset( $this->jsonObject['discrepancy_response']);// No los necesito para facturas
