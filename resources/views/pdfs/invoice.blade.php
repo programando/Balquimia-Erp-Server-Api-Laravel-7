@@ -54,6 +54,7 @@
             <tr>
                 <td width="30%">
                    <img src="{{ Folders::Images('balquimia/logo.jpg') }} " alt="">
+                   {{ Folders::Images('balquimia/logo.jpg') }}
                 </td>
               
                 <td width="40%" class="taC">
