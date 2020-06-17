@@ -27,6 +27,6 @@ Route::post('/register', 'UserController@register');
 Route::post('/login', 'UserController@login');
 Route::post('/logout', 'UserController@logout'); 
 
-Route::get('invoices','Api\FctrasElctrncasInvoicesController@invoices');
+Route::get('invoices','Api\FctrasElctrncasInvoicesController@invoices')->name('invoices');
 
 Route::get('notes/{tpNote}','Api\FctrasElctrncasNotesCrController@notes');
