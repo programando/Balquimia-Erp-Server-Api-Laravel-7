@@ -88,7 +88,7 @@ class FctrasElctrncasInvoicesController extends ApiController
           $this->getNameFiles($Factura );
           $this->invoiceCreateFilesToSend  ( $id_fact_elctrnca,  $Factura  ); 
           InvoiceWasCreatedEvent::dispatch ( $Factura ) ; 
-          dd("invoiceSendToCustomer" . now()) ;
+         
           //InvoiceDeleteFilesJob::dispatch($this->PdfFile,$this->XmlFile )->delay(now()->addMinutes(5));
        }
 
