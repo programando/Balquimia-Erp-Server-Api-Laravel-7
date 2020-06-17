@@ -60,7 +60,7 @@
                 <td width="40%" class="taC">
                     <div class="t38 tB"> BALQUIMIA S.A.S </div>
                     <div class="t24">PBX: (+57-2) 488 1616</div>
-                    <div class="t24 mb15">Calle 35 #4-31 - Cali - Colombia</div>
+                    <div class="t24 mb15">Calle 35 # 4-31 - Cali - Colombia</div>
                     <div class="">Visita nuestro sitio web:</div>
                     <div class="tB"> <a href="http://www.balquimia.com"> www.balquimia.com</a></div>
                 </td>

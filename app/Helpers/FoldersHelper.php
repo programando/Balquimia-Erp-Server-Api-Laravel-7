@@ -9,7 +9,7 @@ class FoldersHelper {
     }
 
     public static function Images ( $Archivo ) {
-       return   storage_path('app/public/images/'.$Archivo);
+       return   asset('storage/images/'.$Archivo);
     }
 
     public static     function ImagesApp( ) {
