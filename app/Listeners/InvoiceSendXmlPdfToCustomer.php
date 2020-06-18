@@ -14,6 +14,7 @@ class InvoiceSendXmlPdfToCustomer
         $Emails = $this->getAcountsToSendEmail ( $event->Factura['emails'] );
         $when   = now()->addSeconds(5);
         Mail::to( $Emails )
+                  ->cc('jhonjamesmg@hotmail.com')
                   ->later( $when,new InvoiceSendToCustomerMail(
                             $event->Factura ,
                             $event->FilePdf, $event->FileXml, 
