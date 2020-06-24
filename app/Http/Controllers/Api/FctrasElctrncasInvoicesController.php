@@ -160,10 +160,11 @@ class FctrasElctrncasInvoicesController extends ApiController
             } 
         }
  
-   
+/*        public function filesDelete() {  
+          $files = Storage::disk('Files')->files();
+          foreach ($files as $File ) {
+              Storage::disk('Files')->delete( $File);
+          }
+       } */
  
-
-   
-
-
 }

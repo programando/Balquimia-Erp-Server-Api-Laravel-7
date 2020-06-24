@@ -25,6 +25,7 @@ Route::get('mail', function () {
     return view('mails.invoices.ToCustomer');
 });
 
+// INVOICES
 Route::get('invoices/pdf/{id}'          , 'Api\FctrasElctrncasInvoicesController@invoiceSendToCustomer');
-Route::get('invoices/accepted/{id}'   , 'Api\FctrasElctrncasInvoicesController@invoiceAccepted');
-Route::get('invoices/rejected/{id}'   , 'Api\FctrasElctrncasInvoicesController@invoiceRejected');
+Route::get('invoices/accepted/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceAccepted');
+Route::get('invoices/rejected/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceRejected');
