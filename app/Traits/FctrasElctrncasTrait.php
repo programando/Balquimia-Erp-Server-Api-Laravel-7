@@ -162,7 +162,7 @@ trait FctrasElctrncasTrait {
 
         protected function traitdocumentErrorResponse ( $id_fact_elctrnca, $dataResponse ){ 
             FctrasElctrncasErrorsMessage::where('id_fact_elctrnca', $id_fact_elctrnca)->delete();
-            dd( array_key_exists('errors_messages',$dataResponse)) ;
+             
             if ( array_key_exists('errors',$dataResponse) ) {
                 $this->validationErrorResponse ($dataResponse , $id_fact_elctrnca );
             }

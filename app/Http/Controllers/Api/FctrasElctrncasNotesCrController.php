@@ -94,16 +94,22 @@ class FctrasElctrncasNotesCrController extends Controller
      }
 
      private  function documentsProcessReponse( $Documento,  $response ){      
-            $idfact_elctrnca     = $Documento['id_fact_elctrnca']  ; 
-            
+            $idfact_elctrnca     = $Documento['id_fact_elctrnca']  ;       
             if ( array_key_exists('is_valid',$response) ) {
-                if ( $response['is_valid'] == true || is_null( $response['is_valid'] ) ) {
-                    $this->traitDocumentSuccessResponse ( $idfact_elctrnca , $response );
-                    $this->noteSendToCustomer  ( $idfact_elctrnca ); }
+                $this->responseContainKeyIsValid($idfact_elctrnca, $response );  
             } else {
                  $this->traitdocumentErrorResponse( $idfact_elctrnca, $response ); 
             } 
     } 
+
+    private function responseContainKeyIsValid($idfact_elctrnca , $response ){
+        if ( $response['is_valid'] == true || is_null( $response['is_valid'] ) ) {
+            $this->traitDocumentSuccessResponse ( $idfact_elctrnca , $response );
+            $this->noteSendToCustomer  ( $idfact_elctrnca ); 
+        }else {
+            $this->traitdocumentErrorResponse( $idfact_elctrnca, $response );     
+        }
+    }
 
     private function noteSendToCustomer () {
         dd('noteSendToCustomer...'. now() );
