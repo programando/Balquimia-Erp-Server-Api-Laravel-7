@@ -33,7 +33,6 @@ class FctrasElctrncasNotesCrController extends Controller
             foreach ($Documentos as $Documento ) {
                $this->notesToSend ( $Documento, $TipoNota) ;
                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;  
-               return $response;
                $this->traitUpdateJsonObject ( $Documento );
                $this->documentsProcessReponse( $Documento, $response ) ;  
             }  
