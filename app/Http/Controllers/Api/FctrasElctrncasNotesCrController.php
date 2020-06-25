@@ -26,9 +26,10 @@ class FctrasElctrncasNotesCrController extends Controller
 
         public function notes( $TipoNota ) {
           $URL = $this->getNotesUrl($TipoNota );
-          dd( $URL);
+           
           if ( $URL == 'NoUrl') return ;
-            $Documentos = FctrasElctrnca::CreditNotesToSend()->get();    
+            $Documentos = FctrasElctrnca::CreditNotesToSend()->get();  
+            dd( $Documentos )  ;
             foreach ($Documentos as $Documento ) {
                $this->notesToSend ( $Documento, $TipoNota) ;
                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;   
