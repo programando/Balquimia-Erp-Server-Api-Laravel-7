@@ -26,6 +26,7 @@ class FctrasElctrncasNotesCrController extends Controller
 
         public function notes( $TipoNota ) {
           $URL = $this->getNotesUrl($TipoNota );
+          dd( $URL);
           if ( $URL == 'NoUrl') return ;
             $Documentos = FctrasElctrnca::CreditNotesToSend()->get();    
             foreach ($Documentos as $Documento ) {
