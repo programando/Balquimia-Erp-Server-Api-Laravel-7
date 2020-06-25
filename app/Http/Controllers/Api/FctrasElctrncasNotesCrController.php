@@ -29,7 +29,7 @@ class FctrasElctrncasNotesCrController extends Controller
            
           if ( $URL == 'NoUrl') return ;
             $Documentos = FctrasElctrnca::CreditNotesToSend()->get();  
-            dd( $Documentos )  ;
+            return $Documentos   ;
             foreach ($Documentos as $Documento ) {
                $this->notesToSend ( $Documento, $TipoNota) ;
                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;   
