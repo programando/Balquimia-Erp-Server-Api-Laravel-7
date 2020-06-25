@@ -182,6 +182,7 @@ trait FctrasElctrncasTrait {
         
         private function validationDianErrorResponse (  $dataResponse, $id_fact_elctrnca ){
             $errors = $dataResponse['errors_messages'];
+            dd( $errors );
             foreach ($errors as $error ) {
                 $ErrorResponse = new FctrasElctrncasErrorsMessage();
                 $ErrorResponse->id_fact_elctrnca = $id_fact_elctrnca;
