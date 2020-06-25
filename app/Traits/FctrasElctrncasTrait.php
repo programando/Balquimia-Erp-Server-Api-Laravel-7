@@ -161,7 +161,8 @@ trait FctrasElctrncasTrait {
         }
 
         protected function traitdocumentErrorResponse ( $id_fact_elctrnca, $dataResponse ){ 
-            FctrasElctrncasErrorsMessage::where('id_fact_elctrnca', $id_fact_elctrnca)->delete(); 
+            FctrasElctrncasErrorsMessage::where('id_fact_elctrnca', $id_fact_elctrnca)->delete();
+            dd( array_key_exists('errors_messages',$dataResponse)) ;
             if ( array_key_exists('errors',$dataResponse) ) {
                 $this->validationErrorResponse ($dataResponse , $id_fact_elctrnca );
             }
@@ -182,7 +183,7 @@ trait FctrasElctrncasTrait {
         
         private function validationDianErrorResponse (  $dataResponse, $id_fact_elctrnca ){
             $errors = $dataResponse['errors_messages'];
-            dd( $errors );
+            
             foreach ($errors as $error ) {
                 $ErrorResponse = new FctrasElctrncasErrorsMessage();
                 $ErrorResponse->id_fact_elctrnca = $id_fact_elctrnca;
