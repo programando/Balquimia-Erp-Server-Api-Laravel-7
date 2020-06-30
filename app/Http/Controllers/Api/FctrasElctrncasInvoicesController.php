@@ -1,39 +1,32 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
-use App\Traits\ApiSoenac;
-use App\Librarys\GuzzleHttp;
 use Illuminate\Http\Request;
 
-use App\Models\FctrasElctrnca   ;
-use Illuminate\Support\Collection;
-use App\Jobs\InvoiceDeleteFilesJob;
-use Illuminate\Support\Facades\App;
-use App\Traits\FctrasElctrncasTrait;
+use App\Traits\ApiSoenac;
+use App\Traits\PdfsTrait;
+use App\Traits\QrCodeTrait;
 
+use App\Helpers\GeneralHelper  ;
+use App\Helpers\DatesHelper;
+
+use App\Models\FctrasElctrnca   ;
+
+use App\Traits\FctrasElctrncasTrait;
 use App\Models\FctrasElctrncasMcipio;
+ 
 use App\Events\InvoiceWasCreatedEvent;
 use App\Http\Controllers\ApiController;
-use App\Helpers\FoldersHelper as Folders;
-use App\Helpers\GeneralHelper as Generales;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 Use Storage;
 Use Carbon;
-// php artisan code:models --table=fctras_elctrncas_email_sends
 
-/*
-    App\Http\Controllers\ApiController:  
-            Controlador base desde donde extienden todos los demás controladores
-            Centraliza m{etodos de respuesta
-*/
 
 class FctrasElctrncasInvoicesController extends ApiController
 {
-   use FctrasElctrncasTrait, ApiSoenac;
+   use FctrasElctrncasTrait, ApiSoenac, QrCodeTrait, PdfsTrait;
 
-   private $jsonObject = [], $PdfFile, $XmlFile ;
+   private $jsonObject = [] ;
   
  
        
@@ -85,7 +78,7 @@ class FctrasElctrncasInvoicesController extends ApiController
        public function invoiceSendToCustomer ( $id_fact_elctrnca ) {
           $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
           $Factura      = $Factura[0];  
-          $this->getNameFiles($Factura );
+          $this->getNameFilesTrait($Factura );
           $this->invoiceCreateFilesToSend  ( $id_fact_elctrnca,  $Factura  ); 
           InvoiceWasCreatedEvent::dispatch ( $Factura ) ; 
          
@@ -104,12 +97,10 @@ class FctrasElctrncasInvoicesController extends ApiController
             $Products     = $Factura['products'];
             $Totals       = $Factura['total'];
             $Additionals  = $Factura['additionals'];
-            $CantProducts = $Products->count();
-            
-            $CodigoQR     = QrCode::format('png')->size(330)->encoding('UTF-8')->generate( $Factura['qr_data'] );
+            $CantProducts = $Products->count();         
+            $CodigoQR     = $this->QrCodeGenerateTrait( $Factura['qr_data'] );
             $Data         = compact('Resolution', 'Fechas', 'Factura','Customer', 'Products','CantProducts', 'Totals','CodigoQR', 'Additionals' );
-            $pdf          = App::make('dompdf.wrapper');
-            $PdfContent   = $pdf->loadView('pdfs.invoice', $Data )->output();
+            $PdfContent   = $this->pdfCreateFileTrait('pdfs.invoice', $Data);
             Storage::disk('Files')->put( $this->PdfFile, $PdfContent);
         }
 
@@ -120,25 +111,18 @@ class FctrasElctrncasInvoicesController extends ApiController
 
         private function FechasFactura ( $FechaFactura, $FechaVencimiento) {
             $Fechas       = [];
-            $FechaFactura = Carbon::createFromFormat('Y-m-d H:i:s', $FechaFactura);
-            $FechaVcmto   = Carbon::createFromFormat('Y-m-d H:i:s', $FechaVencimiento);
+            $FechaFactura = DatesHelper::DocumentDate( $FechaFactura  );  
+            $FechaVcmto   = DatesHelper::DocumentDate( $FechaVencimiento  );
             $Fechas = [
                 'FactDia'   => $FechaFactura->day,
-                'FactMes'   => Generales::nameOfMonth( $FechaFactura->month),
+                'FactMes'   => GeneralHelper::nameOfMonth( $FechaFactura->month),
                 'Factyear'  => $FechaFactura->year,
                 'VenceDia'  => $FechaVcmto->day,
-                'VenceMes'  => Generales::nameOfMonth( $FechaVcmto->month),
+                'VenceMes'  => GeneralHelper::nameOfMonth( $FechaVcmto->month),
                 'VenceYear' => $FechaVcmto->year
             ];
             return $Fechas;
         }
-
-
-        private function getNameFiles( $Factura) {
-                $this->PdfFile     = $Factura['document_number'].'.pdf';
-                $this->XmlFile     = $Factura['document_number'].'.xml';
-        }
-
 
         public function invoiceAccepted ( $Token ) {          
             $this->customerResponse ( $Token, 'ACEPTADA');
@@ -160,11 +144,5 @@ class FctrasElctrncasInvoicesController extends ApiController
             } 
         }
  
-/*        public function filesDelete() {  
-          $files = Storage::disk('Files')->files();
-          foreach ($files as $File ) {
-              Storage::disk('Files')->delete( $File);
-          }
-       } */
  
 }

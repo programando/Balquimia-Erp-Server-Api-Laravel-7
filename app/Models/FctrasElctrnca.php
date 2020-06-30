@@ -148,4 +148,8 @@ class FctrasElctrnca extends Model
 			public function getDocumentNumberAttribute( $value ){
 				return trim($value);
 			}
+			
+			public function getPrfjoDcmntoAttribute( $value ){
+				return trim($value);
+			}
 	}

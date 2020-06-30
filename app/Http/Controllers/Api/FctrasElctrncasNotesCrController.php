@@ -1,30 +1,28 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use Storage;
+use App\Traits\ApiSoenac;
 
-use App\Librarys\GuzzleHttp;
+use App\Traits\PdfsTrait;
+use App\Traits\QrCodeTrait;
 use Illuminate\Http\Request;
+use App\Helpers\DatesHelper ;
 
 use App\Models\FctrasElctrnca;
+use App\Helpers\GeneralHelper  ;
+use App\Events\NoteWasCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Traits\FctrasElctrncasTrait;
 
-use App\Helpers\DatesHelper as Fecha;
-
 class FctrasElctrncasNotesCrController extends Controller
 {
-    use FctrasElctrncasTrait;
+    use FctrasElctrncasTrait,  ApiSoenac, QrCodeTrait, PdfsTrait;
 
     private $jsonObject = [] ;
-    private $ApiSoenac, $keyMonetary ,$keyLines ;
+    private  $keyMonetary ,$keyLines ;
     
-                
-
-        public function __construct ( GuzzleHttp $GuzzleHttps ) {
-            $this->ApiSoenac = $GuzzleHttps;
-        }
-
-        public function notes( $TipoNota ) {
+    public function notes( $TipoNota ) {
           $URL = $this->getNotesUrl($TipoNota );
            
           if ( $URL == 'NoUrl') return ;
@@ -81,7 +79,7 @@ class FctrasElctrncasNotesCrController extends Controller
             $this->jsonObject['billing_reference'] =[
                 'number'       => (string)$BillingRef['number'],
                 'uuid'         => $BillingRef['uuid'],
-                'issue_date'   => Fecha::YMD($BillingRef['issue_date'])
+                'issue_date'   => DatesHelper::YMD($BillingRef['issue_date'])
             ];
      }
      
@@ -96,13 +94,13 @@ class FctrasElctrncasNotesCrController extends Controller
      private  function documentsProcessReponse( $Documento,  $response ){      
             $idfact_elctrnca     = $Documento['id_fact_elctrnca']  ;       
             if ( array_key_exists('is_valid',$response) ) {
-                $this->responseContainKeyIsValid($idfact_elctrnca, $response );  
+                $this->responseContainKeyIsValid($idfact_elctrnca, $response, $Documento );  
             } else {
                  $this->traitdocumentErrorResponse( $idfact_elctrnca, $response ); 
             } 
     } 
 
-    private function responseContainKeyIsValid($idfact_elctrnca , $response ){
+    private function responseContainKeyIsValid($idfact_elctrnca , $response, $Documento ){
         if ( $response['is_valid'] == true || is_null( $response['is_valid'] ) ) {
             $this->traitDocumentSuccessResponse ( $idfact_elctrnca , $response );
             $this->noteSendToCustomer  ( $idfact_elctrnca ); 
@@ -111,8 +109,50 @@ class FctrasElctrncasNotesCrController extends Controller
         }
     }
 
-    private function noteSendToCustomer () {
-        dd('noteSendToCustomer...'. now() );
+    public function noteSendToCustomer ( $id_fact_elctrnca ) {
+        $Note = FctrasElctrnca::with('customer','total', 'products', 'emails', 'Additionals', 'noteBillingReference','noteDiscrepancy')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
+        $Note = $Note[0];
+        $this->getNameFilesTrait($Note, true );
+        $this->noteCreateFilesToSend ( $id_fact_elctrnca, $Note);
+        NoteWasCreatedEvent::dispatch ($Note);
     } 
+
+    private function noteCreateFilesToSend ( $id_fact_elctrnca, $Note){
+     $Resolution = $this->traitSoenacResolutionsNotes();
+     $this->saveNotePdfFile ($Resolution, $Note );
+     $this->saveNoteXmlFile ( $Note             );
+    }
+
+    private function saveNotePdfFile ($Resolution , $Note ) {
+        $Fecha            = $this->FechaNota ( $Note['fcha_dcmnto'] );
+        $Customer         = $Note['customer'];
+        $Products         = $Note['products'];
+        $CantProducts     = $Products->count();
+        $Totals           = $Note['total'];
+        $BillingReference = $Note['noteBillingReference'];
+        $Discrepancy      = $Note['Discrepancy'];
+        $Additionals      = $Note['Additionals'];
+        $CodigoQR         = $this->QrCodeGenerateTrait( $Note['qr_data'] );
+        $DocumentNumber   = $this->DocumentNumber;
+        $Data             = compact('Resolution', 'Fecha', 'Note','Customer', 'Products','CantProducts', 'Totals','CodigoQR','Additionals','DocumentNumber' );
+        $PdfContent       = $this->pdfCreateFileTrait('pdfs.credit-note', $Data);
+        Storage::disk('Files')->put( $this->PdfFile, $PdfContent);
+    }
+
+        private function FechaNota ( $FechaFactura ) {
+            $Fechas       = [];
+            $FechaFactura = DatesHelper::DocumentDate( $FechaFactura  );
+            $Fechas = [
+                'FactDia'   => $FechaFactura->day,
+                'FactMes'   => GeneralHelper::nameOfMonth( $FechaFactura->month),
+                'Factyear'  => $FechaFactura->year,
+            ];
+            return $Fechas;
+        }
+
+        private function saveNoteXmlFile ( $Note ) {
+            $base64_bytes = $Note['attached_document_base64_bytes'];
+            Storage::disk('Files')->put( $this->XmlFile, base64_decode($base64_bytes));
+        }
 
 }

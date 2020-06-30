@@ -15,6 +15,11 @@ class DatesHelper {
         return date_format($value, 'd/mm/Y');
    }
 
+
+    public static function DocumentDate ( $Value ){
+      return Carbon::createFromFormat('Y-m-d H:i:s', $Value);  
+    }
+
     private function checkStringDate(  $value){
       if (date('d-m-Y', strtotime( $value )) == $value ) {
         $this->Fecha = $value;

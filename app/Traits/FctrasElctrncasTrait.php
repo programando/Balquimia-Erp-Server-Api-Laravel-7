@@ -13,7 +13,8 @@ use App\Models\FctrasElctrncasErrorsMessage;
 
 trait FctrasElctrncasTrait {
     
-
+    protected $PdfFile, $XmlFile, $DocumentNumber;
+     
       protected function traitEmailSend ( $Emails, &$jsonObject ) {
          $emails=[] ;
          foreach ($Emails as $Cuenta ) {
@@ -191,6 +192,14 @@ trait FctrasElctrncasTrait {
                 $ErrorResponse->save();
             }
         }
-        
+    
+        private function getNameFilesTrait( $Document, $addPrefijo=false ) {  
+                $documentNumber = $Document['document_number'];
+                $documentNumber = $addPrefijo== true ? $Document['prfjo_dcmnto'].$documentNumber : $documentNumber;
+                $this->PdfFile  = $documentNumber.'.pdf';
+                $this->XmlFile  = $documentNumber.'.xml';
+                $this->DocumentNumber = $documentNumber;
+        }
+
 
 }

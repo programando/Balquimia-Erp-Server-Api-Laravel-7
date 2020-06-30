@@ -11,23 +11,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class InvoiceSendXmlPdfToCustomer
 {
     public function handle(InvoiceWasCreatedEvent $event) {
-        $Emails = $this->getAcountsToSendEmail ( $event->Factura['emails'] );
+        $Emails =   $event->Factura['emails']->unique('email')  ;     
         $when   = now()->addSeconds(5);
         Mail::to( $Emails )
-                  ->cc('jhonjamesmg@hotmail.com')
                   ->later( $when,new InvoiceSendToCustomerMail(
                             $event->Factura ,
                             $event->FilePdf, $event->FileXml, 
                             $event->PathPdf, $event->PathXml
                             ));
     }
-
-    private function getAcountsToSendEmail( $Emails ) {
-        //$Emails  = array_values(array_unique($Emails ));
-         foreach ($Emails as $email) {
-             $Enviar[]=$email['email'];
-         }
-         return $Enviar;
-    }
+ 
 
 }

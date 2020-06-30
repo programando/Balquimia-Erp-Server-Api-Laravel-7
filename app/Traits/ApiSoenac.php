@@ -31,6 +31,15 @@ trait ApiSoenac {
          }
       }
 
+      public function traitSoenacResolutionsNotes() {
+         $Resolutions =   $this->ApiSoenac->getRequest('config/resolutions' ) ; 
+         foreach ($Resolutions as $Resolution) {
+            if ( $Resolution['id'] === 2 ){
+               return $Resolution;
+            }
+         }
+      }
+
 
         public function traitSoenacTables()   {
             $response =    $this->ApiSoenac->getRequest('listings' ) ;

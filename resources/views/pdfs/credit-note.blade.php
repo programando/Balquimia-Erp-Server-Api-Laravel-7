@@ -66,10 +66,10 @@
                 <td width="30%" class="taR">
                     <div class="t24">NIT: 900.755.214-4</div>
                     <div >RÉGIMEN IMPUESTOS SOBRE LAS VENTAS - IVA</div>
-                    <div >Resolución DIAN N°.: {{ $Resolution['resolution'] }}</div>
-                    <div >Fecha:  {{ $Resolution['resolution_date'] }}</div>  
-                    <div >Autorización de Facturación</div>
-                    <div >{{ $Resolution['prefix'].$Resolution['from']. ' hasta '. $Resolution['prefix'].$Resolution['to']  }}</div>
+                    <div> &nbsp; </div>
+                    <div>&nbsp; </div>  
+                    <div> &nbsp;</div>
+                    <div> &nbsp;</div>
                 </td>
             </tr>
         </table>
@@ -82,43 +82,30 @@
                     <div class="bAzul bS1 bRad1 bB0">
                         <table width="100%" class="taC colorfff tB">
                             <tr>
-                                <td class="p8 bRS1">Fecha Factura</td>
+                                <td class="p8 bRS1">Fecha Nota crédito</td>
                             </tr>
                         </table>
                     </div>
                     <div class="bS1 bRad2">
                         <table width="100%" class="taC">
                             <tr>
-                                <td width="33%" class="p5 bRS1">{{ $Fechas['FactDia'] }}</td>
-                                <td width="33%" class="p5 bRS1">{{ $Fechas['FactMes'] }}</td>
-                                <td width="34%" class="p5 bRS1">{{ $Fechas['Factyear'] }}</td>
+                                <td width="33%" class="p5 bRS1">{{ $Fecha['FactDia'] }}</td>
+                                <td width="33%" class="p5 bRS1">{{ $Fecha['FactMes'] }}</td>
+                                <td width="34%" class="p5 bRS1">{{ $Fecha['Factyear'] }}</td>
                             </tr>
                         </table>
                     </div>
                 </td>
                 <td></td>
+
                 <td width="30%">
-                    <div class="bAzul bS1 bRad1 bB0">
-                        <table width="100%" class="taC colorfff tB">
-                            <tr>
-                                <td class="p8 bRS1">Fecha Vencimiento</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="bS1 bRad2">
-                        <table width="100%" class="taC">
-                            <tr>
-                                <td width="33%" class="p5 bRS1">{{ $Fechas['VenceDia'] }}</td>
-                                <td width="33%" class="p5 bRS1">{{ $Fechas['VenceMes'] }}</td>
-                                <td width="34%" class="p5 bRS1">{{ $Fechas['VenceYear'] }}</td>
-                            </tr>
-                        </table>
-                    </div>
+
                 </td>
+
                 <td></td>
                 <td width="35%">
-                    <div class="t26 taC mb3"><strong> FACTURA ELECTRÓNICA DE VENTA </strong> </div>
-                    <div class="p8 bS1 bRad tB taC t32"> {{ $Factura['prfjo_dcmnto']. ' ' . $Factura['nro_dcmnto'] }}</div>
+                    <div class="t26 taC mb3"><strong> NOTA CRÉDITO ELECTRÓNICA </strong> </div>
+                    <div class="p8 bS1 bRad tB taC t32"> {{ $DocumentNumber  }}</div>
                 </td>
             </tr>
         </table>
@@ -131,7 +118,7 @@
                     <td width="10%" class="p5 tB">N.I.T.:</td>
                     <td width="25%" class="p5">{{ $Customer['identification_number'] }}</td>
                     <td width="10%" class="p5 tB">Firmado:</td>
-                    <td width="20%" class="p5">{{ $Factura['created_at'] }}</td>
+                    <td width="20%" class="p5">{{ $Note['created_at'] }}</td>
                 </tr>
                 <tr>
                     <td width="10%" class="p5 tB">Dirección:</td>
@@ -144,24 +131,15 @@
                 <tr>
                     <td width="10%" class="p5 tB">Email :</td>
                     <td width="25%" class="p5">{{ $Customer['email'] }}</td>
-                    <td width="10%" class="p5 tB">Forma Pago:</td>
-                    <td width="25%" class="p5">{{ $Additionals['frma_pgo'] }}</td>
+                    <td width="10%" class="p5 tB">Factura:</td>
+                    <td width="25%" class="p5">{{ $Additionals['fctra_credit_note'] }} ( Documento cruce ) </td>
 
                 </tr>
 
             </table>
         </div>
 
-        <div class="bS1 bRad mb40">
-            <table width="100%">
-                <tr>
-                    <td width="15%" class="p105 tB bAzul colorfff bRS1">N° Orden de compra:</td>
-                    <td width="35%" class="p105 bRS1">{{ $Factura['order_reference'] }}</td>
-                    <td width="15%" class="p105 tB bAzul colorfff  bRS1">Vendedor:</td>
-                    <td width="35%" class="p105">{{ $Additionals['nom_vnddor'] }}</td>
-                </tr>
-            </table>
-        </div>
+ 
 
         <div class="bS1 bRad mb40">
             <table width="100%" class="bAzul taC colorfff tB">
@@ -201,12 +179,14 @@
                         </div>
                         <div class="mb15">
                             <strong>CUFE:</strong>
-                            {{ $Factura['uuid']}}
+                            {{ $Note['uuid']}}
                         </div>
 
                         <div >
-                            <strong>NOTAS:</strong>
-                            {!! $Factura['notes'] !!}
+                            @if ( $Note['notes'] )
+                                <strong>NOTAS:</strong>
+                                {!! $Note['notes'] !!}
+                            @endif
                         </div>
                     </td>
 
@@ -269,14 +249,12 @@
         <div class="h60"></div>
 
         <div class="bS1 bRad p8 taC">
-            <div class="t24 tB mb10">NO ACEPTAMOS DEVOLUCIONES DESPUÉS DE 15 DÍAS DE RECIBIDO EL PRODUCTO.</div>
+            <div class="t24 tB mb10"> </div>
             <div class="mb10">
-                ELABORAMOS Y COMERCIALIZAMOS PRODUCTOS QUÍMICOS CONCENTRADOS Y ESPECIALIZADOS PARA LA LIMPIEZA, LA DESINFECCIÓN PROFUNDA Y EL
-                MANTENIMIENTO PREVENTIVO O CORRECTIVO EN LOS SECTORES: INDUSTRIAL, INSTITUCIONAL, TEXTIL, AUTOMOTRIZ, ARTES GRÁFICAS, MATERIAS PRIMAS Y LA
-                INDUSTRIA ALIMENTARIA. PRODUCTOS QUE RESPETAN LAS NORMAS DE SEGURIDAD INDUSTRIAL Y AL MEDIO AMBIENTE. CONSÚLTENOS Y DENOS LA OPORTUNIDAD
-                DE PRESENTAR NUESTRO PORTAFOLIO Y PROPUESTA DE VALOR.
+ 
             </div>
-            <div class="tB">Esta factura es un título valor de acuerdo al art. 774 del C.C. y una vez aceptada declara haber recibido los bienes y servicios a satisfacción</div>
+            <div class="tB"> 
+            </div>
         </div>
 
     </div>
