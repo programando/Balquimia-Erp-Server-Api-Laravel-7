@@ -35,8 +35,9 @@ class FctrasElctrncasInvoicesController extends ApiController
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();
             foreach ($Documentos as $Documento ) {
                 $this->invoicesToSend ( $Documento) ;
-                return $this->jsonObject ;
-                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;          
+                
+                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;   
+                return $this->$response  ;       
                 $this->traitUpdateJsonObject ( $Documento );
                 $this->documentsProcessReponse( $Documento, $response ) ;
             }  
