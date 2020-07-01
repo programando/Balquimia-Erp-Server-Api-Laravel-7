@@ -35,7 +35,8 @@ class FctrasElctrncasInvoicesController extends ApiController
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();
             foreach ($Documentos as $Documento ) {
                 $this->invoicesToSend ( $Documento) ;
-                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;         
+                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;  
+                     
                 $this->traitUpdateJsonObject ( $Documento );
                 $this->documentsProcessReponse( $Documento, $response ) ;
             }  
@@ -64,16 +65,24 @@ class FctrasElctrncasInvoicesController extends ApiController
  
         private  function documentsProcessReponse($Documento,  $response ){
             $id_fact_elctrnca           = $Documento['id_fact_elctrnca']  ;
-            if ( array_key_exists('is_valid',$response) ) {
-                if ( $response['is_valid'] == true || is_null( $response['is_valid'] ) ) {
-                    $this->traitDocumentSuccessResponse ( $id_fact_elctrnca, $response );             
-                     $this->invoiceSendToCustomer ( $id_fact_elctrnca );
-                }
-            } else {
+               if ( array_key_exists('is_valid',$response) ) {
+                $this->responseContainKeyIsValid ( $id_fact_elctrnca, $response );                   
+            } else {       
                 $this->traitdocumentErrorResponse( $id_fact_elctrnca, $response ); 
             }
         }
-        
+
+
+    
+    private function responseContainKeyIsValid($idfact_elctrnca , $response ){
+        if ( $response['is_valid'] == true || is_null( $response['is_valid'] ) ) {
+            $this->traitDocumentSuccessResponse ( $idfact_elctrnca , $response );
+            $this->invoiceSendToCustomer  ( $idfact_elctrnca ); 
+        }else {
+            $this->traitdocumentErrorResponse( $idfact_elctrnca, $response );     
+        }
+    }
+
        public function invoiceSendToCustomer ( $id_fact_elctrnca ) {
           $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
           $Factura      = $Factura[0];  
