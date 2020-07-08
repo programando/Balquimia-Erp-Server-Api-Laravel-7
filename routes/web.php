@@ -13,21 +13,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
 });
 
+Route::post('/register', 'UserController@register');
+Route::post('/login', 'UserController@login');
+Route::post('/logout', 'UserController@logout'); 
+ 
 
-
-Route::get('mail', function () {
-
-    return view('mails.invoices.ToCustomer');
-});
-
-// INVOICES
-Route::get('invoices/pdf/{id}'          , 'Api\FctrasElctrncasInvoicesController@invoiceSendToCustomer');
-Route::get('invoices/accepted/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceAccepted');
-Route::get('invoices/rejected/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceRejected');
-
-Route::get('notes/pdf/{id}'          , 'Api\FctrasElctrncasNotesCrController@noteSendToCustomer');
+//FRASE DEL DÍA
+Route::get('frase'          , 'FrasesController@sentenceToday');

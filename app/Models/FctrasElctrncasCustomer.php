@@ -67,9 +67,25 @@ class FctrasElctrncasCustomer extends Model
 		'email',
 		'merchant_registration'
 	];
+	
+/// RELATIONS
+		public function fctras_elctrnca()
+		{
+			return $this->belongsTo(FctrasElctrnca::class, 'id_fact_elctrnca');
+		}
+// GETTERS
+		public function getNameAttribute ( $value ) {
+			return trim ( $value );
+		}
+		public function getPhoneAttribute ( $value ) {
+			return trim ( $value );
+		}
 
-	public function fctras_elctrnca()
-	{
-		return $this->belongsTo(FctrasElctrnca::class, 'id_fact_elctrnca');
-	}
+		public function getAddressAttribute ( $value ) {
+			return trim ( $value );
+		}
+		public function getEmailAttribute ( $value ) {
+			return trim ( $value );
+		}
+
 }

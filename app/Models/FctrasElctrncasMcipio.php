@@ -32,4 +32,10 @@ class FctrasElctrncasMcipio extends Model
 		'cod_mcpio',
 		'name_mcpio'
 	];
+
+	//GETTTERS
+		public function getNameMcpioAttribute ( $value ) {
+			return trim ( $value );
+		}
+
 }

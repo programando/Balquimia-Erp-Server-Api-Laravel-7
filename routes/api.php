@@ -18,20 +18,16 @@ echo "<pre>{$query->sql} - {$query->time}</pre>";
 });
 
 */
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('/register', 'UserController@register');
-Route::post('/login', 'UserController@login');
-Route::post('/logout', 'UserController@logout'); 
 
 
-Route::get('/facturas', function ( ) {
-    return 'ok';
-});
 
+ 
 
+// INVOICES
 Route::get('invoices','Api\FctrasElctrncasInvoicesController@invoices')->name('invoices');
+Route::get('invoices/pdf/{id}'          , 'Api\FctrasElctrncasInvoicesController@invoiceSendToCustomer');
+Route::get('invoices/accepted/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceAccepted');
+Route::get('invoices/rejected/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceRejected');
 
+Route::get('notes/pdf/{id}'          , 'Api\FctrasElctrncasNotesCrController@noteSendToCustomer');
 Route::get('notes/{tpNote}','Api\FctrasElctrncasNotesCrController@notes');

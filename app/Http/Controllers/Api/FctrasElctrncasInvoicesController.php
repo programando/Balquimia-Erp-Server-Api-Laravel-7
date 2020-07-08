@@ -72,8 +72,6 @@ class FctrasElctrncasInvoicesController extends ApiController
             }
         }
 
-
-    
     private function responseContainKeyIsValid($idfact_elctrnca , $response ){
         if ( $response['is_valid'] == true || is_null( $response['is_valid'] ) ) {
             $this->traitDocumentSuccessResponse ( $idfact_elctrnca , $response );

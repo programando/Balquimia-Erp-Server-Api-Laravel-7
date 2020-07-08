@@ -15,7 +15,7 @@ use App\Events\NoteWasCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Traits\FctrasElctrncasTrait;
 
-class FctrasElctrncasNotesCrController extends Controller
+class FctrasElctrncasNotesCrController extends ApiController
 {
     use FctrasElctrncasTrait,  ApiSoenac, QrCodeTrait, PdfsTrait;
 
@@ -94,13 +94,13 @@ class FctrasElctrncasNotesCrController extends Controller
      private  function documentsProcessReponse( $Documento,  $response ){      
             $idfact_elctrnca     = $Documento['id_fact_elctrnca']  ;       
             if ( array_key_exists('is_valid',$response) ) {
-                $this->responseContainKeyIsValid($idfact_elctrnca, $response, $Documento );  
+                $this->responseContainKeyIsValid($idfact_elctrnca, $response );  
             } else {
                  $this->traitdocumentErrorResponse( $idfact_elctrnca, $response ); 
             } 
     } 
 
-    private function responseContainKeyIsValid($idfact_elctrnca , $response, $Documento ){
+    private function responseContainKeyIsValid($idfact_elctrnca , $response ){
         if ( $response['is_valid'] == true || is_null( $response['is_valid'] ) ) {
             $this->traitDocumentSuccessResponse ( $idfact_elctrnca , $response );
             $this->noteSendToCustomer  ( $idfact_elctrnca ); 

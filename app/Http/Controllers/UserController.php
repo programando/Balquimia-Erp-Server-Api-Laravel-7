@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -37,7 +38,7 @@ class UserController extends Controller
 
 
         throw ValidationException::withMessages( [
-            'email' => ['The provides credentials are incorrects!!']
+            'email' =>  [ Lang::get("validation.attributes.login-error") ]
         ]);
 
     }

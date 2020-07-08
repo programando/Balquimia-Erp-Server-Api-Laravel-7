@@ -67,4 +67,8 @@ class FctrasElctrncasInvoiceLine extends Model
 	{
 		return $this->belongsTo(FctrasElctrnca::class, 'id_fact_elctrnca');
 	}
+	/// GETTERS
+	public function getDescriptionAttribute ( $value ){
+		return trim( $value );
+	}
 }

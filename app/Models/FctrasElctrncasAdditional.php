@@ -52,4 +52,9 @@ class FctrasElctrncasAdditional extends Model
 	{
 		return $this->belongsTo(FctrasElctrnca::class, 'id_fact_elctrnca');
 	}
+
+	public function getVrLetrasAttribute ( $value ){
+		return trim ( $value );
+	}
+	
 }

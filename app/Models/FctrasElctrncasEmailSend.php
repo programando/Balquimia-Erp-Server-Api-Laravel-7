@@ -37,4 +37,8 @@ class FctrasElctrncasEmailSend extends Model
 	{
 		return $this->belongsTo(FctrasElctrncasHeader::class, 'id_fact_elctrnca');
 	}
+
+	public function getEmailAttribute ( $value ){
+		return trim ( $value );
+	}
 }
