@@ -1,0 +1,2 @@
+ Crear Modelos
+    php artisan code:models --table=terceros_users

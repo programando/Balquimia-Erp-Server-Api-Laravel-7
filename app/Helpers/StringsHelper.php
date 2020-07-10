@@ -22,7 +22,10 @@ class StringsHelper {
         return $String;
     }
     
-
+    public static function LowerTrim ( $String) {
+           $String = trim( $String );
+           return mb_strtolower( $String,'UTF-8'); 
+    }
     
 }
 ?>

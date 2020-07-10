@@ -32,11 +32,10 @@ class FctrasElctrncasInvoicesController extends ApiController
        
         public function invoices() {
             $URL = 'invoice/'. env('FACTURA_ELECT_TEST_ID');
-            $Documentos = FctrasElctrnca::InvoicesToSend()->get();
+            $Documentos = FctrasElctrnca::InvoicesToSend()->get();       
             foreach ($Documentos as $Documento ) {
                 $this->invoicesToSend ( $Documento) ;
-                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;  
-                     
+                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;     
                 $this->traitUpdateJsonObject ( $Documento );
                 $this->documentsProcessReponse( $Documento, $response ) ;
             }  
