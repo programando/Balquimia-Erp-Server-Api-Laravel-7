@@ -17,9 +17,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', 'UserController@register');
-Route::post('/login', 'UserController@login');
-Route::post('/logout', 'UserController@logout'); 
+//Route::post('/register' , 'UserController@register');
+
+Route::post('/login'            , 'TercerosUserController@login')->name('login');
+Route::post('/logout'           , 'TercerosUserController@logout')->name('logout'); 
+Route::post('/reset/password'   , 'TercerosUserController@resetPassword')->name('reset-password'); 
  
 
 //FRASE DEL DÍA

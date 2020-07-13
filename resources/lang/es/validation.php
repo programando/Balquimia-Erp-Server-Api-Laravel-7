@@ -130,9 +130,11 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'UserLogin' => [
+            'credencials-error' => 'Las datos de acceso que registró no se han encontrado en nuestra base de datos o su registro está inactivo. No podrá acceder al sistema.',
+            'inactive-user'     => 'Usuario no autorizado para ingreso al nuestro sistema o registro inactivo en nuestra base de datos.',
         ],
+        
     ],
 
     /*
@@ -147,7 +149,7 @@ return [
     */
 
     'attributes' => [
-        'login-error' => 'Las credenciales que ha proporcionado no coinciden con nuestros registros.'
+        
     ],
 
 ];

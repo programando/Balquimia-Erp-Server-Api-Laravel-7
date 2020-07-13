@@ -1,2 +1,4 @@
+ php artisan serve --host=localhost --port=8000
+ 
  Crear Modelos
     php artisan code:models --table=terceros_users

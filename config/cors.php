@@ -15,7 +15,7 @@ return [
     |api/*
     */
 
-    'paths'                    => ['*','/login','/logout','/sanctum/csrf-cookie'],
+    'paths'                    => ['*','/login','/logout','/reset/password','/sanctum/csrf-cookie'],
     'allowed_methods'          => ['*'],
     'allowed_origins'          => ['http://localhost:3000','https://facturas.plusoft.co' ],
     'allowed_origins_patterns' => [],

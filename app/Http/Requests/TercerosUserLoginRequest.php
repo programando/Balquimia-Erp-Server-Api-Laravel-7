@@ -26,8 +26,7 @@ class TercerosUserLoginRequest extends FormRequest
     {
          $currentRouteName = Route::currentRouteName();
         if ( $currentRouteName == 'login')              {  return $this->Loginvalidate();       }
-        if ( $currentRouteName == 'reset-password')     {  return $this->PasswordRemember();    }
-        if ( $currentRouteName == 'update-password')    {  return $this->ResetPassword();       }
+        if ( $currentRouteName == 'reset-password')     {  return $this->ResetPassword();    }
     }
 
      private function Loginvalidate(){
@@ -37,18 +36,16 @@ class TercerosUserLoginRequest extends FormRequest
         ];
     }
 
+ /*    return [
+      'slug'=> ['required', 'unique:slugs, camposlug,'. $this->slug]
+      ] */
 
-    private function PasswordRemember(){
+    private function ResetPassword(){
           return [
                 'email'       => ['required', 'email','exists:terceros_users'],
         ];
     }
 
-    private function ResetPassword(){
-             return [
-                'password'    => ['required', 'confirmed'],
-        ];
-    }
 
     public function messages()
     {

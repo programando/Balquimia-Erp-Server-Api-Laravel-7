@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
        'App\Events\NoteWasCreatedEvent' => [
             'App\Listeners\NoteSendXmlPdfToCustomer',
         ],
+        'App\Events\UserPasswordResetEvent' => [
+            'App\Listeners\UserPasswordReset',
+        ]
     ];
 
     /**

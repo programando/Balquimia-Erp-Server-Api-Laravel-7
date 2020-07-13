@@ -6,47 +6,29 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use App\Helpers\StringHelper as Strings;
 
-class TercerosUser extends Model
+class TercerosUser extends Authenticatable
 {
-	protected $table = 'terceros_users';
-	protected $primaryKey = 'id_terc';
-	public $incrementing = false;
+	use Notifiable;
 
-	protected $casts = [
-		'id_terc' => 'int',
-		'inactivo' => 'bool',
-		'autorizado' => 'bool'
-	];
+	protected $primaryKey   = 'id_terc';
+	protected $table        = 'terceros_users';
+	public    $incrementing = false;
 
-	protected $dates = [
-		'tmp_token_expira'
-	];
-
-	protected $hidden = [
-		'password',
-		'remember_token',
-		'tmp_token'
-	];
-
-	protected $fillable = [
-		'email',
-		'password',
-		'inactivo',
-		'autorizado',
-		'avatar',
-		'remember_token',
-		'tmp_token',
-		'tmp_token_expira'
-	];
+	protected $casts    = [	'id_terc' => 'int',		'inactivo' => 'bool',		'autorizado' => 'bool'	];
+	protected $dates    = [ 'tmp_token_expira'	];
+	protected $fillable = [ 'email',		'password',			'inactivo',			'autorizado',		'avatar',		'remember_token',		'tmp_token',		'tmp_token_expira'	];
+	protected $hidden   = [	'password',	'remember_token',		'tmp_token'	];
 
 
-	     
-     //  MUTATORS:  Modifican datos antes de que lleguen a la base de datos
+     //  MUTATORS:
    		public function setPasswordAttribute ( $value ){
 					$this->attributes['password'] = Hash::make( $value );
 			}
