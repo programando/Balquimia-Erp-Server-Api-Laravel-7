@@ -25,32 +25,43 @@ class TercerosUserLoginRequest extends FormRequest
     public function rules()
     {
          $currentRouteName = Route::currentRouteName();
-        if ( $currentRouteName == 'login')              {  return $this->Loginvalidate();       }
-        if ( $currentRouteName == 'reset-password')     {  return $this->ResetPassword();    }
+        if ( $currentRouteName == 'login')              {  return $this->loginvalidate();       }
+        if ( $currentRouteName == 'reset-password')     {  return $this->resetPassword();       }
+        if ( $currentRouteName == 'update-password')    {  return $this->updatePassword();      }
+
+        
     }
 
-     private function Loginvalidate(){
+     private function loginvalidate(){
           return [
                 'email'       => ['required', 'email','exists:terceros_users'],
-                'password'    => ['required'],
+                'password'    => ['required','min:6'],
         ];
     }
 
- /*    return [
+     /*    return [
       'slug'=> ['required', 'unique:slugs, camposlug,'. $this->slug]
       ] */
 
-    private function ResetPassword(){
-          return [
-                'email'       => ['required', 'email','exists:terceros_users'],
-        ];
-    }
+      private function resetPassword(){
+            return [
+                  'email'       => ['required', 'email','exists:terceros_users'],
+          ];
+      }
 
+    private function updatePassword() {
+          return [
+                  'password'  => ['required','confirmed','min:6'],
+          ];
+    }
 
     public function messages()
     {
       return [
         'email.exists' => 'Cuenta de correo (Email) no encontrada en nuestros registros',
+        'password.confirmed' => 'La contraseña y su confirmación no son iguales.',
+        'password.required' => 'La contraseña y su confirmación son campos obligatorios',
+        'password.min' => 'La contraseña debe tener al menos 6 caracteres',
       ];
     }
 

@@ -149,7 +149,7 @@ return [
     */
 
     'attributes' => [
-        
+            'password' => 'contraseña',
     ],
 
 ];

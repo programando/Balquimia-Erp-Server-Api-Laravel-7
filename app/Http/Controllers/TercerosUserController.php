@@ -37,21 +37,46 @@ class TercerosUserController extends Controller
         $User = TercerosUser::where('email', $FormData->email)->first();
         if ( ! $User->autorizado || $User->inactivo ) {
             $this->ErrorMessage (  Lang::get("validation.custom.UserLogin.inactive-user") );
-        }
-        
+        }  
         $User->tmp_token        = Str::random(100);
         $User->tmp_token_expira = Carbon::now()->addMinute(10) ;
         $User->save();
-        $DataUser = [
-            'user' => $User->email,
-            'token' => $User->tmp_token,
-        ];
-        UserPasswordResetEvent::dispatch( compact('DataUser'));
-
-        return response()->json($User, 200);  
- 
+        UserPasswordResetEvent::dispatch( $User->email, $User->tmp_token );
+        return response()->json('Ok', 200);  
     }
 
+    public function updatePassword ( TercerosUserLoginRequest $FormData ){
+        $User       = $User = TercerosUser::where('tmp_token', $FormData->token)->first();
+      
+        $this->tokenValidate           ( $User  );
+        $this->tokenExpirationValidate ( $User  );
+
+        $User->password       = $FormData->password;
+        $User->remember_token = '';
+        $User->tmp_token      = '';
+        $User->save();
+
+       return response()->json($User, 200); 
+
+    }
+
+    private function tokenValidate ( $User ){
+        if ( !$User) {
+            throw ValidationException::withMessages( [
+                'password' =>  [ 'El token de validación ha expirado o no ha sido validado. Debes iniciar el proceso nuevamente.'  ]
+            ]);             
+        }
+    }
+
+    private function tokenExpirationValidate ( $User ) {
+        $Expiracion = $User->tmp_token_expira;
+        $Diferencia = $Expiracion->diffInMinutes();
+        if (  $Diferencia > 15 ) {
+            throw ValidationException::withMessages( [
+                'password' =>  [ 'El token de validación ha expirado o no ha sido validado. Debes iniciar el proceso nuevamente.'  ]
+            ]);             
+        }
+    }
 
     public function logout(){
         Session::flush();

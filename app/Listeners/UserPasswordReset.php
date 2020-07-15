@@ -2,30 +2,17 @@
 
 namespace App\Listeners;
 
+ 
+use App\Mail\UserPaswordResetMail;
+use Illuminate\Support\Facades\Mail;
 use App\Events\UserPasswordResetEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UserPasswordReset
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Handle the event.
-     *
-     * @param  UserPasswordResetEvent  $event
-     * @return void
-     */
-    public function handle(UserPasswordResetEvent $event)
-    {
-        //
+    public function handle(UserPasswordResetEvent $event)    {
+         Mail::to( $event->Email)
+            ->queue( new UserPaswordResetMail (  $event->Email, $event->Token   ));
     }
 }

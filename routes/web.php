@@ -13,16 +13,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/login'            , 'TercerosUserController@login')->name('login');
+Route::post('/logout'           , 'TercerosUserController@logout')->name('logout'); 
+Route::post('/reset/password'   , 'TercerosUserController@resetPassword')->name('reset-password'); 
+Route::post('/update/password'   , 'TercerosUserController@updatePassword')->name('update-password'); 
+
+//Route::post('/register' , 'UserController@register');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::post('/register' , 'UserController@register');
-
-Route::post('/login'            , 'TercerosUserController@login')->name('login');
-Route::post('/logout'           , 'TercerosUserController@logout')->name('logout'); 
-Route::post('/reset/password'   , 'TercerosUserController@resetPassword')->name('reset-password'); 
- 
 
 //FRASE DEL DÍA
 Route::get('frase'          , 'FrasesController@sentenceToday');
