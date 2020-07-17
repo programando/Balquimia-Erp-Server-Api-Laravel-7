@@ -9,48 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-
-/**
- * Class FctrasElctrnca
- * 
- * @property int $id_fact_elctrnca
- * @property int $number
- * @property bool $sync
- * @property bool $send
- * @property string $notes
- * @property int $type_operation_id
- * @property int $type_document_id
- * @property int $resolution_id
- * @property Carbon $due_date
- * @property int $type_currency_id
- * @property string $order_reference
- * @property string $receipt_document_reference
- * @property Carbon $created_at
- * @property bool $rspnse_dian
- * @property bool $rspnse_is_valid
- * @property string $rspnse_number
- * @property string $rspnse_uuid
- * @property Carbon $rspnse_issue_date
- * @property string $rspnse_zip_key
- * @property string $rspnse_status_code
- * @property string $rspnse_status_description
- * @property string $rspnse_status_message
- * @property string $rspnse_xml_file_name
- * @property string $rpnse_zip_name
- * @property string $rpnse_qr_data
- * @property string $rpnse_application_response_base64_bytes
- * @property string $rpnse_attached_document_base64_bytes
- * @property string $rpnse_pdf_base64_bytes
- * @property string $rspnse_zip_base64_bytes
- * @property string $rspnse_dian_response_base64_bytes
- * 
- * @property Collection|FctrasElctrncasCustomer[] $fctras_elctrncas_customers
- * @property Collection|FctrasElctrncasEmailSend[] $fctras_elctrncas_email_sends
- * @property Collection|FctrasElctrncasInvoiceLine[] $fctras_elctrncas_invoice_lines
- * @property Collection|FctrasElctrncasLegalMonetaryTotal[] $fctras_elctrncas_legal_monetary_totals
- *
- * @package App\Models
- */
+ 
 class FctrasElctrnca extends Model
 {
 	protected $table      = 'fctras_elctrncas';
@@ -99,12 +58,6 @@ class FctrasElctrnca extends Model
 		'status_message',
 		'xml_file_name',
 		'zip_name',
-		'qr_data',
-		'application_response_base64_bytes',
-		'attached_document_base64_bytes',
-		'pdf_base64_bytes',
-		'zip_base64_bytes',
-		'dian_response_base64_bytes',
 		'cstmer_rspnse',
 		'cstmer_rspnse_date'
 	];
