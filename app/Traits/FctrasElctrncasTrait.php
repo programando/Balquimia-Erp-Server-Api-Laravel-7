@@ -4,6 +4,7 @@ namespace App\Traits;
  
 use Illuminate\Support\Str;
 use App\Models\FctrasElctrnca;
+use App\Models\FctrasElctrncasDataResponse;
 use Illuminate\Support\Facades\Hash;
 use App\Helpers\DatesHelper as Fecha;
 use App\Helpers\NumbersHelper as Numbers;
@@ -151,14 +152,20 @@ trait FctrasElctrncasTrait {
             $Registro['status_message']                    = $dataResponse['status_message'];
             $Registro['xml_file_name']                     = $dataResponse['xml_file_name'];
             $Registro['zip_name']                          = $dataResponse['zip_name'];
-            $Registro['qr_data']                           = $dataResponse['qr_data'];
-            $Registro['application_response_base64_bytes'] = $dataResponse['application_response_base64_bytes'];
-            $Registro['attached_document_base64_bytes']    = $dataResponse['attached_document_base64_bytes'];
-            $Registro['pdf_base64_bytes']                  = $dataResponse['pdf_base64_bytes'];
-            $Registro['zip_base64_bytes']                  = $dataResponse['zip_base64_bytes'];
-            $Registro['dian_response_base64_bytes']        = $dataResponse['dian_response_base64_bytes'];
-            $Registro['cstmer_token']                      = Str::random(60);  
+            $Registro['cstmer_token']                      = Str::random(60); 
             $Registro->save();
+
+            // Almacena respuesta de la factura
+            $FctrasDataReponse = new FctrasElctrncasDataResponse;
+            $FctrasDataReponse->id_fact_elctrnca                   = $id_factelctrnca;
+            $FctrasDataReponse->qr_data                            = $dataResponse['qr_data'];
+            $FctrasDataReponse->application_response_base64_bytes  = $dataResponse['application_response_base64_bytes'];
+            $FctrasDataReponse->attached_document_base64_bytes     = $dataResponse['attached_document_base64_bytes'];
+            $FctrasDataReponse->pdf_base64_bytes                   = $dataResponse['pdf_base64_bytes'];
+            $FctrasDataReponse->zip_base64_bytes                   = $dataResponse['zip_base64_bytes'];
+            $FctrasDataReponse->dian_response_base64_bytes         = $dataResponse['dian_response_base64_bytes'];
+            $FctrasDataReponse->save(); 
+            
         }
 
         protected function traitdocumentErrorResponse ( $id_fact_elctrnca, $dataResponse ){ 

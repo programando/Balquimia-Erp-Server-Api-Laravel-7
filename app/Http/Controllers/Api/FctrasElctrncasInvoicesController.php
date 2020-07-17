@@ -81,13 +81,11 @@ class FctrasElctrncasInvoicesController extends ApiController
     }
 
        public function invoiceSendToCustomer ( $id_fact_elctrnca ) {
-          $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
+          $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals', 'serviceResponse')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
           $Factura      = $Factura[0];  
           $this->getNameFilesTrait($Factura );
           $this->invoiceCreateFilesToSend  ( $id_fact_elctrnca,  $Factura  ); 
           InvoiceWasCreatedEvent::dispatch ( $Factura ) ; 
-         
-          //InvoiceDeleteFilesJob::dispatch($this->PdfFile,$this->XmlFile )->delay(now()->addMinutes(5));
        }
 
         private function invoiceCreateFilesToSend ( $id_fact_elctrnca,  $Factura  ){
@@ -97,19 +95,21 @@ class FctrasElctrncasInvoicesController extends ApiController
         }
 
         private function saveInvoicePfdFile  ( $Resolution, $Factura   ){           
-            $Fechas       = $this->FechasFactura ( $Factura['fcha_dcmnto'], $Factura['due_date'] );
-            $Customer     = $Factura['customer'];
-            $Products     = $Factura['products'];
-            $Totals       = $Factura['total'];
-            $Additionals  = $Factura['additionals'];
-            $CantProducts = $Products->count();         
-            $CodigoQR     = $this->QrCodeGenerateTrait( $Factura['qr_data'] );
-            $Data         = compact('Resolution', 'Fechas', 'Factura','Customer', 'Products','CantProducts', 'Totals','CodigoQR', 'Additionals' );
-            $PdfContent   = $this->pdfCreateFileTrait('pdfs.invoice', $Data);
+            $Fechas          = $this->FechasFactura ( $Factura['fcha_dcmnto'], $Factura['due_date'] );
+            $Customer        = $Factura['customer'];
+            $Products        = $Factura['products'];
+            $Totals          = $Factura['total'];
+            $Additionals     = $Factura['additionals'];
+            $ServiceResponse = $Factura['serviceResponse'];
+            $CantProducts    = $Products->count();         
+            $CodigoQR        = $this->QrCodeGenerateTrait( $ServiceResponse['qr_data'] );
+            $Data            = compact('Resolution', 'Fechas', 'Factura','Customer', 'Products','CantProducts', 'Totals','CodigoQR', 'Additionals' );
+            $PdfContent      = $this->pdfCreateFileTrait('pdfs.invoice', $Data);
             Storage::disk('Files')->put( $this->PdfFile, $PdfContent);
         }
 
         private function saveInvoiceXmlFile ( $Factura) {
+            $Factura      = $Factura['serviceResponse'];
             $base64_bytes = $Factura['attached_document_base64_bytes'];
             Storage::disk('Files')->put( $this->XmlFile, base64_decode($base64_bytes));
         }
@@ -148,6 +148,8 @@ class FctrasElctrncasInvoicesController extends ApiController
                 $Factura->update();
             } 
         }
+
+
  
  
 }

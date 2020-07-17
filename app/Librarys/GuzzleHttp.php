@@ -38,17 +38,6 @@ class GuzzleHttp {
             ]); 
             return json_decode($response->getBody()->getContents(),true);
       
-            return $response;
-            //return    $response->getBody()->getContents() ; 
-            
-/*             $response = $response ? $response->getBody()->getContents() : null;
-            $status = $response ? $response->getStatusCode() : 500;
-
-            if ($response && $status === 200 && $response !== 'null') {
-               return $status ;
-            }
-            return null; */
-
     }
  
  

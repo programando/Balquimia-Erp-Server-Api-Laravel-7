@@ -132,6 +132,9 @@ class FctrasElctrnca extends Model
 		public function additionals() {
 			return $this->hasOne(FctrasElctrncasAdditional::class, 'id_fact_elctrnca');
 		}
+		public function serviceResponse() {
+			return $this->hasOne(FctrasElctrncasDataResponse::class, 'id_fact_elctrnca');
+		}
 		
 
 		// SCOPES
@@ -149,7 +152,12 @@ class FctrasElctrnca extends Model
 				return trim($value);
 			}
 			
+
 			public function getPrfjoDcmntoAttribute( $value ){
 				return trim($value);
 			}
+			public function getUuidAttribute( $value ){
+				return trim($value);
+			}
+
 	}

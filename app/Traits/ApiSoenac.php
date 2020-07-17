@@ -21,9 +21,9 @@ trait ApiSoenac {
                       );
          return  $Resoluciones  ;
       }
-
+      
       public function traitSoenacResolutionsInvoice() {
-         $Resolutions =   $this->ApiSoenac->getRequest('config/resolutions' ) ; 
+         $Resolutions =   $this->traitSoenacResolutions(); //$this->ApiSoenac->getRequest('config/resolutions' ) ; 
          foreach ($Resolutions as $Resolution) {
             if ( $Resolution['id'] === 4 ){
                return $Resolution;
@@ -32,7 +32,7 @@ trait ApiSoenac {
       }
 
       public function traitSoenacResolutionsNotes() {
-         $Resolutions =   $this->ApiSoenac->getRequest('config/resolutions' ) ; 
+         $Resolutions =   $this->traitSoenacResolutions(); //$this->ApiSoenac->getRequest('config/resolutions' ) ; 
          foreach ($Resolutions as $Resolution) {
             if ( $Resolution['id'] === 2 ){
                return $Resolution;
