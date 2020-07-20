@@ -9,6 +9,8 @@ class GuzzleHttp {
     protected $headers;
 
     public function __construct( ) {
+       dd( env('FACTURA_ELECT_TOKEN' ));
+
         $this->Guzzle = new Client([
             'base_uri' => env('FACTURA_ELECT_URL_BASE'),
             'exceptions' => false,
