@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function (Request $request) {
+    return view('welcome');
+});
+
 Route::post('/login'            , 'TercerosUserController@login')->name('login');
 Route::post('/logout'           , 'TercerosUserController@logout')->name('logout'); 
 Route::post('/reset/password'   , 'TercerosUserController@resetPassword')->name('reset-password'); 
