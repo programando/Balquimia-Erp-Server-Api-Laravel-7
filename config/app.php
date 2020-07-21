@@ -123,6 +123,44 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+     /*
+    |--------------------------------------------------------------------------
+    | Hide environment variables
+    |--------------------------------------------------------------------------
+    */  
+    'debug_hide' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'DB_USERNAME',
+            'MAIL_HOST',
+            'MAIL_USERNAME',
+            'MAIL_PASSWORD',
+            'MAIL_FROM_ADDRESS',
+            'FACTURA_ELECT_URL_BASE',
+            'FACTURA_ELECT_TOKEN',
+            'FACTURA_ELECT_TEST_ID',
+
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'DB_USERNAME',
+            'MAIL_HOST',
+            'MAIL_USERNAME',
+            'MAIL_PASSWORD',
+            'MAIL_FROM_ADDRESS',
+            'FACTURA_ELECT_URL_BASE',
+            'FACTURA_ELECT_TOKEN',
+            'FACTURA_ELECT_TEST_ID',
+        ],
+
+        '_POST' => [
+            'password',
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
