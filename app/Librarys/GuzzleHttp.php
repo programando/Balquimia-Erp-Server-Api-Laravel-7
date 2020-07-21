@@ -9,7 +9,7 @@ class GuzzleHttp {
     protected $headers;
 
     public function __construct( ) {
-       dd ( env('gMAIL_FROM_ADDRESS') );
+       dd ( env('APP_NAME') );
 
         $this->Guzzle = new Client([
             'base_uri' => env('FACTURA_ELECT_URL_BASE'),
