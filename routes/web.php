@@ -15,12 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function (Request $request) {
-    $MiApp = trim( env('APP_NAME')) ;
-    dd( substr( $MiApp,0,1) );
-    if ( substr( $MiApp,0,1) == "^") {
-       $MiApp = substr($MiApp,1,strlen($MiApp)) ;
-    }
-    dd( $MiApp );
+ 
     return view('welcome');
 });
 
