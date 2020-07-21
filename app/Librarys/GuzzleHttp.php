@@ -9,7 +9,8 @@ class GuzzleHttp {
     protected $headers;
 
     public function __construct( ) {
-       dd ( env('SANCTUM_STATEFUL_DOMAINS') );
+       dd ( env('gMAIL_FROM_ADDRESS') );
+
         $this->Guzzle = new Client([
             'base_uri' => env('FACTURA_ELECT_URL_BASE'),
             'exceptions' => false,
