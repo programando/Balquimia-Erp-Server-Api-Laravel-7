@@ -5,11 +5,12 @@ namespace App\Traits;
 use Illuminate\Support\Str;
 use App\Models\FctrasElctrnca;
 use App\Models\FctrasElctrncasDataResponse;
+use App\Models\FctrasElctrncasErrorsMessage;
 use Illuminate\Support\Facades\Hash;
 use App\Helpers\DatesHelper as Fecha;
 use App\Helpers\NumbersHelper as Numbers;
 use App\Helpers\StringsHelper as Strings;
-use App\Models\FctrasElctrncasErrorsMessage;
+
 
 
 trait FctrasElctrncasTrait {
