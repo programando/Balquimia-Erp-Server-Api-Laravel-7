@@ -14,12 +14,12 @@ trait ApiSoenac {
       }
 
       public function traitSoenacResolutions() {
-         $Resoluciones = Cache::tags('Resoluciones')
-                      ->rememberForEver('Resoluciones', function() {
+         //$Resoluciones = Cache::tags('Resoluciones')
+           //         ->rememberForEver('Resoluciones', function() {
                              return $this->ApiSoenac->getRequest('config/resolutions' ) ; 
-                        }
-                      );
-         return  $Resoluciones  ;
+                        //}
+                      //);
+         //return  $Resoluciones  ;
       }
       
       public function traitSoenacResolutionsInvoice() {
