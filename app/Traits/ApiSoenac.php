@@ -14,8 +14,8 @@ trait ApiSoenac {
       }
 
       public function traitSoenacResolutions() {
-         $Resoluciones = Cache::tags('Resoluciones')
-                    ->rememberForEver('Resoluciones', function() {
+         $Resoluciones = Cache::tags('ResolucionesJulio')
+                    ->rememberForEver('ResolucionesJulio', function() {
                              return $this->ApiSoenac->getRequest('config/resolutions' ) ; 
                    }
            );
