@@ -38,7 +38,7 @@ class FctrasElctrncasInvoicesController extends ApiController
                 $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;     
                 $this->traitUpdateJsonObject ( $Documento );
                 $this->documentsProcessReponse( $Documento, $response ) ;
-                return $response;
+                return $response ;
             }  
         }
 
@@ -64,11 +64,6 @@ class FctrasElctrncasInvoicesController extends ApiController
 
  
         private  function documentsProcessReponse($Documento,  $response ){
-/*             $id_fact_elctrnca           = $Documento['id_fact_elctrnca']  ;
-            $Registro                   = FctrasElctrnca::findOrFail( $id_fact_elctrnca );
-            $Registro['rspnse_dian']    = true;
-            $Registro->save(); */
-
             if ( array_key_exists('is_valid',$response) ) {
                 $this->responseContainKeyIsValid ( $id_fact_elctrnca, $response );                   
             } else {       

@@ -137,13 +137,13 @@ trait FctrasElctrncasTrait {
         protected function traitUpdateJsonObject ( $Documento ) {
             $id_fact_elctrnca           = $Documento['id_fact_elctrnca']  ;
             $Registro                   = FctrasElctrnca::findOrFail( $id_fact_elctrnca );
+            $Registro['rspnse_dian']    = true;
             $Registro['json_data']      = $this->jsonObject ;
             $Registro->save();
         }
 
        protected function traitDocumentSuccessResponse( $id_factelctrnca, $dataResponse ){
             $Registro = FctrasElctrnca::findOrFail( $id_factelctrnca );
-            $Registro['rspnse_dian']                       = true;
             $Registro['is_valid']                          = $dataResponse['is_valid'];
             $Registro['document_number']                   = $dataResponse['number'];
             $Registro['uuid']                              = $dataResponse['uuid'];
@@ -163,8 +163,6 @@ trait FctrasElctrncasTrait {
             $FctrasDataReponse->application_response_base64_bytes  = $dataResponse['application_response_base64_bytes'];
             $FctrasDataReponse->attached_document_base64_bytes     = $dataResponse['attached_document_base64_bytes'];
             $FctrasDataReponse->pdf_base64_bytes                   = $dataResponse['pdf_base64_bytes'];
-            $FctrasDataReponse->zip_base64_bytes                   = $dataResponse['zip_base64_bytes'];
-            $FctrasDataReponse->dian_response_base64_bytes         = $dataResponse['dian_response_base64_bytes'];
             $FctrasDataReponse->save(); 
             
         }
