@@ -15,7 +15,7 @@ use App\Events\NoteWasCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Traits\FctrasElctrncasTrait;
 
-class FctrasElctrncasNotesCrController extends ApiController
+class FctrasElctrncasNotesCrController  
 {
     use FctrasElctrncasTrait,  ApiSoenac, QrCodeTrait, PdfsTrait;
 
@@ -110,7 +110,7 @@ class FctrasElctrncasNotesCrController extends ApiController
     }
 
     public function noteSendToCustomer ( $id_fact_elctrnca ) {
-        $Note = FctrasElctrnca::with('customer','total', 'products', 'emails', 'Additionals', 'noteBillingReference','noteDiscrepancy')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
+        $Note = FctrasElctrnca::with('customer','total', 'products', 'emails', 'Additionals', 'noteBillingReference','noteDiscrepancy','serviceResponse')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
         $Note = $Note[0];
         $this->getNameFilesTrait($Note, true );
         $this->noteCreateFilesToSend ( $id_fact_elctrnca, $Note);
@@ -132,7 +132,8 @@ class FctrasElctrncasNotesCrController extends ApiController
         $BillingReference = $Note['noteBillingReference'];
         $Discrepancy      = $Note['Discrepancy'];
         $Additionals      = $Note['Additionals'];
-        $CodigoQR         = $this->QrCodeGenerateTrait( $Note['qr_data'] );
+        $ServiceResponse  = $Note['serviceResponse'];
+        $CodigoQR         = $this->QrCodeGenerateTrait( $ServiceResponse['qr_data'] );
         $DocumentNumber   = $this->DocumentNumber;
         $Data             = compact('Resolution', 'Fecha', 'Note','Customer', 'Products','CantProducts', 'Totals','CodigoQR','Additionals','DocumentNumber' );
         $PdfContent       = $this->pdfCreateFileTrait('pdfs.credit-note', $Data);
@@ -151,6 +152,7 @@ class FctrasElctrncasNotesCrController extends ApiController
         }
 
         private function saveNoteXmlFile ( $Note ) {
+            $Note         = $Note['serviceResponse'];
             $base64_bytes = $Note['attached_document_base64_bytes'];
             Storage::disk('Files')->put( $this->XmlFile, base64_decode($base64_bytes));
         }

@@ -23,7 +23,8 @@ class InvoiceSendXmlPdfToCustomer
                             $event->Factura ,
                             $event->FilePdf, $event->FileXml, 
                             $event->PathPdf, $event->PathXml,
-                            $EmailSubject, $event->ZipPathFile, $event->ZipFile
+                            $EmailSubject, 
+                            $event->ZipPathFile, $event->ZipFile
                             ));
     }
  

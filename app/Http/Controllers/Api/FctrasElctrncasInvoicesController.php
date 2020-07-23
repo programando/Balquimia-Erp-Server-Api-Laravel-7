@@ -22,7 +22,7 @@ Use Storage;
 Use Carbon;
 
 
-class FctrasElctrncasInvoicesController extends ApiController
+class FctrasElctrncasInvoicesController  
 {
    use FctrasElctrncasTrait, ApiSoenac, QrCodeTrait, PdfsTrait;
 
