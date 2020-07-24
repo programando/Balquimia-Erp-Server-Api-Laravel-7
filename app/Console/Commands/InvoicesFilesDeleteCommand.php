@@ -38,9 +38,9 @@ class InvoicesFilesDeleteCommand extends Command
      */
     public function handle()
     {
-          $files = Storage::disk('Files')->files();
+/*           $files = Storage::disk('Files')->files();
           foreach ($files as $File ) {
               Storage::disk('Files')->delete( $File);
-          }
+          } */
     }
 }
