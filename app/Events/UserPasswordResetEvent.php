@@ -15,11 +15,11 @@ class UserPasswordResetEvent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $Email, $Token  ;
+
     public function __construct ( $Email, $Token )
     {
         $this->Email = $Email ;
         $this->Token = $Token;
-         
          
     }
 
