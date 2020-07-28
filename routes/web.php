@@ -14,14 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (Request $request) {
-    return view('welcome');
-});
-
 Route::post('/login'            , 'TercerosUserController@login')->name('login');
 Route::post('/logout'           , 'TercerosUserController@logout')->name('logout'); 
 Route::post('/reset/password'   , 'TercerosUserController@resetPassword')->name('reset-password'); 
 Route::post('/update/password'   , 'TercerosUserController@updatePassword')->name('update-password'); 
+
+Route::get('/', function (Request $request) {
+    return view('welcome');
+});
+
+
 
 //Route::post('/register' , 'UserController@register');
 
