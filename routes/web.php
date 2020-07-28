@@ -14,10 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login'            , 'TercerosUserController@login')->name('login');
-Route::post('/logout'           , 'TercerosUserController@logout')->name('logout'); 
-Route::post('/reset/password'   , 'TercerosUserController@resetPassword')->name('reset-password'); 
-Route::post('/update/password'   , 'TercerosUserController@updatePassword')->name('update-password'); 
+
 
 Route::get('/', function (Request $request) {
     return view('welcome');
@@ -27,9 +24,6 @@ Route::get('/', function (Request $request) {
 
 //Route::post('/register' , 'UserController@register');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 
 //FRASE DEL DÍA
