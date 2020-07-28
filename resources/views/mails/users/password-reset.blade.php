@@ -89,7 +89,7 @@ h1{font-size:26px !important; line-height:28px !important;}
                                     <table border="0" cellspacing="0" cellpadding="0">
                                         <tr>
                                             <td align="center" bgcolor="#007C89" id="button">
-                                             <a href="http://localhost:3000/erp/users/{{ $Token }}"  target="_blank" style="border-radius:0; border:1px solid #007C89; color:#FFFFFF; display:inline-block; font-size:16px; font-family:'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif; font-weight:400; letter-spacing:.3px; padding:20px; text-decoration:none;">
+                                             <a href="{{ $urlClient }}"  target="_blank" style="border-radius:0; border:1px solid #007C89; color:#FFFFFF; display:inline-block; font-size:16px; font-family:'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif; font-weight:400; letter-spacing:.3px; padding:20px; text-decoration:none;">
                                                 Cambiar contraseña
                                             </a>
                                             </td>

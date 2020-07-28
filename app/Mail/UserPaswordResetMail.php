@@ -13,14 +13,14 @@ class UserPaswordResetMail extends Mailable
     use Queueable, SerializesModels;
 
     public $from;
-    public $Email, $Token  ;
+    public $Email, $Token , $urlClient ;
 
     public function __construct( $Email, $Token )
     {
         $this->Email = $Email;
         $this->Token = $Token;
         $this->from = ['address'=>'sistemas@balquimia.com', 'name' => config('balquimia.EMPRESA' )];
-
+        $this->urlClient = env('APP_URL_CLIENT') .'erp/users/'.$event->Token;
     }
 
   
