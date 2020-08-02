@@ -20,7 +20,7 @@ class UserPaswordResetMail extends Mailable
         $this->Email = $Email;
         $this->Token = $Token;
         $this->from = ['address'=>'sistemas@balquimia.com', 'name' => config('balquimia.EMPRESA' )];
-        $this->urlClient = env('APP_URL_CLIENT') .'erp/users/'.$event->Token;
+        $this->urlClient = env('APP_URL_CLIENT') .'erp/users/'.$Token;
     }
 
   
