@@ -65,6 +65,7 @@ class FctrasElctrnca extends Model
 
 		public function customer() {
 			return $this->hasOne(FctrasElctrncasCustomer::class, 'id_fact_elctrnca');
+			
 		}
 
 		public function total() {

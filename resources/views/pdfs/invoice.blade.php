@@ -181,7 +181,7 @@
                         <td width="15%" class="p128 taR">       {{ Numbers::invoiceFormat($Product['line_extension_amount']) }}</td>
                     </tr>
                 @endforeach
-                {{ $CantFaltante= 32-$Product['CantProducts'] }}
+                {{ $CantFaltante= 25-$Product['CantProducts'] }}
                 @for ($i = 1; $i <= $CantFaltante; $i++)
                      <tr>
                         <td width="15%" class="p128 bRS1"></td>
