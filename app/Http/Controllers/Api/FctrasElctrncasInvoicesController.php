@@ -35,9 +35,9 @@ class FctrasElctrncasInvoicesController
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();       
             foreach ($Documentos as $Documento ) {
                 $this->invoicesToSend ( $Documento) ;
-                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;     
+                //$response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;     
                 $this->traitUpdateJsonObject ( $Documento );
-                $this->documentsProcessReponse( $Documento, $response ) ;
+                //$this->documentsProcessReponse( $Documento, $response ) ;
                  
             }  
         }
@@ -56,6 +56,7 @@ class FctrasElctrncasInvoicesController
                 $this->traitOrderReference              ( $invoce    , $this->jsonObject   );
                 $this->traitReceiptDocumentReference    ( $invoce    , $this->jsonObject   );
                 $this->traitCustomer                    ( $Others[0]['customer']  , $this->jsonObject   );
+                $this->traitPaymentForms                ( $invoce  , $this->jsonObject   );
                 $this->traitLegalMonetaryTotals         ( $Others[0]['total']     , $this->jsonObject, 'legal_monetary_totals' );
                 $this->traitInvoiceLines                ( $Others[0]['products']  , $this->jsonObject, 'invoice_lines'   );
                 unset( $this->jsonObject['billing_reference']);
