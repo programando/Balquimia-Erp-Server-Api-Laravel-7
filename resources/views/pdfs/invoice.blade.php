@@ -65,9 +65,11 @@
                 </td>
                 <td width="30%" class="taR">
                     <div class="t24">NIT: 900.755.214-4</div>
+                     
                     <div >RÉGIMEN IMPUESTOS SOBRE LAS VENTAS - IVA</div>
                     <div >Resolución DIAN N°.: {{ $Resolution['resolution'] }}</div>
                     <div >Fecha:  {{ $Resolution['resolution_date'] }}</div>  
+                    <div >Vigencia:  {{ $Resolution['date_to'] }}</div>  
                     <div >Autorización de Facturación</div>
                     <div >{{ $Resolution['prefix'].$Resolution['from']. ' hasta '. $Resolution['prefix'].$Resolution['to']  }}</div>
                 </td>
@@ -181,7 +183,7 @@
                         <td width="15%" class="p128 taR">       {{ Numbers::invoiceFormat($Product['line_extension_amount']) }}</td>
                     </tr>
                 @endforeach
-                {{ $CantFaltante= 25-$Product['CantProducts'] }}
+                {{ $CantFaltante= 23-$Product['CantProducts'] }}
                 @for ($i = 1; $i <= $CantFaltante; $i++)
                      <tr>
                         <td width="15%" class="p128 bRS1"></td>
@@ -269,7 +271,7 @@
         <div class="h60"></div>
 
         <div class="bS1 bRad p8 taC">
-            <div class="t24 tB mb10">NO ACEPTAMOS DEVOLUCIONES DESPUÉS DE 15 DÍAS DE RECIBIDO EL PRODUCTO.</div>
+            <div class="t24 tB mb10">NO ACEPTAMOS DEVOLUCIONES DESPUÉS DE 15 DÍAS DE RECIBIDO(S) EL(LOS) PRODUCTO(S).</div>
             <div class="mb10">
                 ELABORAMOS Y COMERCIALIZAMOS PRODUCTOS QUÍMICOS CONCENTRADOS Y ESPECIALIZADOS PARA LA LIMPIEZA, LA DESINFECCIÓN PROFUNDA Y EL
                 MANTENIMIENTO PREVENTIVO O CORRECTIVO EN LOS SECTORES: INDUSTRIAL, INSTITUCIONAL, TEXTIL, AUTOMOTRIZ, ARTES GRÁFICAS, MATERIAS PRIMAS Y LA
@@ -277,6 +279,14 @@
                 DE PRESENTAR NUESTRO PORTAFOLIO Y PROPUESTA DE VALOR.
             </div>
             <div class="tB">Esta factura es un título valor de acuerdo al art. 774 del C.C. y una vez aceptada declara haber recibido los bienes y servicios a satisfacción</div>
+            <br>
+            <br>
+            <div >
+            <small>
+                Factura electrónica generada por BALQUIMIA S.A.S. Nit: 900.755.214-4  Software: COMPUTRON <br>
+                Envío facturación directa a través de servicio Web dispuesto por la DIAN. ( No aplica proveedor tecnológico)
+                </small>
+            </div>
         </div>
 
     </div>
