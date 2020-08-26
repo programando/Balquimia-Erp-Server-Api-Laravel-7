@@ -61,10 +61,6 @@ trait FctrasElctrncasTrait {
                 'resolution_id'        => $Document["resolution_id"],
                 'due_date'             => Fecha::YMD ( $Document["due_date"] ),
                 'type_currency_id'     => $Document["type_currency_id"],
-/*                 'payment_form_id'      => $Document["payment_form_id"],
-                'payment_method_id'    => $Document["payment_method_id"],
-                'payment_due_date'     => Fecha::YMD($Document["due_date"]),
-                'duration_measure'     => $Document["duration_measure"], */
                 'cc'                   => [],
                 ] ;
       }
@@ -89,14 +85,16 @@ trait FctrasElctrncasTrait {
         }
 
         protected function traitPaymentForms( $Document, &$jsonObject  ) {
-            $jsonObject['payment_forms'] =[
+            $payment = [
                 'payment_form_id'   => $Document["payment_form_id"],
-                'payment_method_id' => $Document["payment_method_id"],
+                'payment_method_id' => '75',
                 'payment_due_date'  => Fecha::YMD($Document["due_date"]),
-                'duration_measure'  => $Document["duration_measure"]
+                'duration_measure'  => $Document["duration_measure"] 
             ];
+            $jsonObject['payment_forms'][] =$payment;
         }
 
+ 
 
         protected function traitLegalMonetaryTotals ( $Totals, &$jsonObject, $key  ) {
             $jsonObject[$key] =[
