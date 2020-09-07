@@ -7,8 +7,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
+use App\Events\NewInvoice;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
  
 class FctrasElctrnca extends Model
 {
@@ -62,7 +63,6 @@ class FctrasElctrnca extends Model
 		'cstmer_rspnse_date'
 	];
 
-
 		public function customer() {
 			return $this->hasOne(FctrasElctrncasCustomer::class, 'id_fact_elctrnca');
 			
@@ -113,5 +113,7 @@ class FctrasElctrnca extends Model
 			public function getUuidAttribute( $value ){
 				return trim($value);
 			}
+
+
 
 	}

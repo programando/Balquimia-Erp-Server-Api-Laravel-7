@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
        'App\Events\InvoiceWasCreatedEvent' => [
             'App\Listeners\InvoiceSendXmlPdfToCustomer',
         ],
+        'App\Events\InvoiceWasCreatedEventEmailCopy' => [
+            'App\Listeners\InvoiceSendXmlPdfToCustomerEmailCopy',
+        ],       
        'App\Events\NoteWasCreatedEvent' => [
             'App\Listeners\NoteSendXmlPdfToCustomer',
         ],

@@ -21,7 +21,7 @@ echo "<pre>{$query->sql} - {$query->time}</pre>";
 Route::post('/login'            , 'TercerosUserController@login')->name('login');
 Route::post('/logout'           , 'TercerosUserController@logout')->name('logout'); 
 Route::post('/reset/password'   , 'TercerosUserController@resetPassword')->name('reset-password'); 
-Route::post('/update/password'   , 'TercerosUserController@updatePassword')->name('update-password'); 
+Route::post('/update/password'  , 'TercerosUserController@updatePassword')->name('update-password'); 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -29,10 +29,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // INVOICES
+    Route::group(['prefix'=>'invoices', 'namespace'=>'Api'], function() {
+        Route::get('/'                 , 'FctrasElctrncasInvoicesController@invoices')->name('invoices');
+        Route::get('pdf/{id}'          , 'FctrasElctrncasInvoicesController@invoiceSendToCustomer');
+        Route::get('accepted/{id}'     , 'FctrasElctrncasInvoicesController@invoiceAccepted');
+        Route::get('rejected/{id}'     , 'FctrasElctrncasInvoicesController@invoiceRejected');
+        });
+// NOTES
+    Route::group(['prefix'=>'notes', 'namespace'=>'Api'], function() {
+        Route::get('pdf/{id}'             , 'FctrasElctrncasNotesCrController@noteSendToCustomer');
+        Route::get('{tpNote}'             , 'FctrasElctrncasNotesCrController@notes');
+    });
+
+/*
+// INVOICES
 Route::get('invoices','Api\FctrasElctrncasInvoicesController@invoices')->name('invoices');
 Route::get('invoices/pdf/{id}'          , 'Api\FctrasElctrncasInvoicesController@invoiceSendToCustomer');
 Route::get('invoices/accepted/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceAccepted');
 Route::get('invoices/rejected/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceRejected');
 // NOTES
-Route::get('notes/pdf/{id}'          , 'Api\FctrasElctrncasNotesCrController@noteSendToCustomer');
-Route::get('notes/{tpNote}','Api\FctrasElctrncasNotesCrController@notes');
+Route::get('notes/pdf/{id}'             , 'Api\FctrasElctrncasNotesCrController@noteSendToCustomer');
+Route::get('notes/{tpNote}'             ,'Api\FctrasElctrncasNotesCrController@notes');
+*/

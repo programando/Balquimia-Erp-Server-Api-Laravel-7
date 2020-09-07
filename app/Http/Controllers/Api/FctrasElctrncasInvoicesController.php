@@ -1,22 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
 use App\Traits\ApiSoenac;
 use App\Traits\PdfsTrait;
 use App\Traits\QrCodeTrait;
+use App\Traits\FctrasElctrncasTrait;
 
-use App\Helpers\GeneralHelper  ;
 use App\Helpers\DatesHelper;
+use App\Helpers\GeneralHelper  ;
 
 use App\Models\FctrasElctrnca   ;
-
-use App\Traits\FctrasElctrncasTrait;
 use App\Models\FctrasElctrncasMcipio;
  
 use App\Events\InvoiceWasCreatedEvent;
-use App\Http\Controllers\ApiController;
+use App\Events\InvoiceWasCreatedEventEmailCopy;
 
 Use Storage;
 Use Carbon;
@@ -29,7 +29,6 @@ class FctrasElctrncasInvoicesController
    private $jsonObject = [] ;
   
  
-       
         public function invoices() {
             $URL = 'invoice/'. env('FACTURA_ELECT_TEST_ID');
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();       
@@ -87,7 +86,8 @@ class FctrasElctrncasInvoicesController
           $Factura      = $Factura[0];  
           $this->getNameFilesTrait($Factura );
           $this->invoiceCreateFilesToSend  ( $id_fact_elctrnca,  $Factura  ); 
-          InvoiceWasCreatedEvent::dispatch ( $Factura ) ; 
+          InvoiceWasCreatedEvent::dispatch          ( $Factura ) ; 
+          InvoiceWasCreatedEventEmailCopy::dispatch ( $Factura );
        }
 
         private function invoiceCreateFilesToSend ( $id_fact_elctrnca,  $Factura  ){
