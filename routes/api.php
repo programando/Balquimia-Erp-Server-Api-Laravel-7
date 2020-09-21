@@ -34,7 +34,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::get('pdf/{id}'          , 'FctrasElctrncasInvoicesController@invoiceSendToCustomer');
         Route::get('accepted/{id}'     , 'FctrasElctrncasInvoicesController@invoiceAccepted');
         Route::get('rejected/{id}'     , 'FctrasElctrncasInvoicesController@invoiceRejected');
-        });
+    });
+
+    Route::group(['prefix' => 'facturas-electronicas', 'namespace' => 'Api'], function () {
+        Route::get('/',                 'FctrasElctrncasController@index')->name('api.facturas.electronicas.index');
+        Route::get('/{FctrasElctrnca}', 'FctrasElctrncasController@show')->name('api.facturas.electronicas.show');
+    });
+
+  
+
 // NOTES
     Route::group(['prefix'=>'notes', 'namespace'=>'Api'], function() {
         Route::get('pdf/{id}'             , 'FctrasElctrncasNotesCrController@noteSendToCustomer');

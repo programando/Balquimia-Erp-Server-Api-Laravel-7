@@ -4,7 +4,9 @@ namespace App\Providers;
 
 
 use Carbon\Carbon;
+use App\Mixins\JsonApiBuilder;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Builder;
  
 class ApiServiceProvider extends ServiceProvider
 {
@@ -34,5 +36,9 @@ class ApiServiceProvider extends ServiceProvider
      */
     public function boot()  {
        Carbon::setLocale( app()->getLocale());
+        
+        // Creao un mixin para agupar funcionalidades, en este caso del laravel builder. Extiende las funcionalidades del builder
+        //JsonApiBuilder  Es una classe creada en cualquier sitio de nuestra aplicación. Para el caso, App\Mixins. y allí creo la clase.
+        Builder::mixin( new JsonApiBuilder); 
     }
 }

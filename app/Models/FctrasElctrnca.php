@@ -16,6 +16,9 @@ class FctrasElctrnca extends Model
 	protected $table      = 'fctras_elctrncas';
 	protected $primaryKey = 'id_fact_elctrnca';
 	public    $timestamps = false;
+	
+	public    $type         = 'facturas.electronicas';
+  public    $allowedSorts = ['fcha_dcmnto'];
 
 	protected $casts = [
 		'number'            => 'int',
@@ -62,6 +65,14 @@ class FctrasElctrnca extends Model
 		'cstmer_rspnse',
 		'cstmer_rspnse_date'
 	];
+
+		public function fields(){
+			return [
+					'number' => $this->number,
+					'fcha_dcmnto' => $this->fcha_dcmnto,
+					'rspnse_dian' => $this->rspnse_dian,
+			];
+		}
 
 		public function customer() {
 			return $this->hasOne(FctrasElctrncasCustomer::class, 'id_fact_elctrnca');
