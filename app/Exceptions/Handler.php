@@ -2,11 +2,22 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Traits\ApiResponser;
+use Illuminate\Database\QueryException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Database\Eloquent\RelationNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
+   use ApiResponser;
     /**
      * A list of the exception types that are not reported.
      *
@@ -50,6 +61,45 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        return parent::render($request, $exception);
+      
+        if ($exception instanceof  ValidationException ) {
+            return $this->convertValidationExceptionToResponse ( $exception,$request );
+        }
+        if ($exception instanceof  ModelNotFoundException ) {
+            $model =   class_basename( $exception->getModel()) ;
+            return $this->errorResponse("No existe informacion con el parámetro indicado en el recurso: {$model} "  , 404);
+        }
+         if ($exception instanceof  RelationNotFoundException ) {
+            return $this->errorResponse("Se ha establecido una relación no existente "  , 500);
+        }
+        if ($exception instanceof  AuthenticationException ) {
+            return $this->errorResponse("No autenticado"  , 401);
+        }
+        if ($exception instanceof  NotFoundHttpException ) {
+            return $this->errorResponse("No se ha encontrado la URL especificada"  , 404);
+        }    
+        if ($exception instanceof  MethodNotAllowedHttpException ) {
+            return $this->errorResponse("Método no permitido."  , 405);
+        }        
+        if ($exception instanceof  HttpException ) {
+            return $this->errorResponse( $exception->getMessage() , $exception->getStatusCode());
+        }
+        if ($exception instanceof  QueryException ) {
+              $errosCode = $exception->errorInfo[1];
+              if ( $errosCode == 1451) 
+                return $this->errorResponse( 'No es posible borrar el registro porque causaría inconsistencia en la base de datos', 409);
+        }   
+        if ( config('app.debug')) {
+            return parent::render($request, $exception);
+        }
+        return $this->errorResponse('Falla inesperada. Intente luego', 500);
     }
+
+    protected function convertValidationExceptionToResponse(ValidationException $e, $request)
+    {
+        return $this->ApiResponser(  $e->getMessage(), 422);
+    }
+
+
+ 
 }

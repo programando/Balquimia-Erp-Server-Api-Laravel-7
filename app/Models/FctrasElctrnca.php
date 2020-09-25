@@ -17,7 +17,7 @@ class FctrasElctrnca extends Model
 	protected $primaryKey = 'id_fact_elctrnca';
 	public    $timestamps = false;
 	
-	public    $type         = 'facturas.electronicas';
+	public    $type         = 'facturas-electronicas';
   public    $allowedSorts = ['fcha_dcmnto'];
 
 	protected $casts = [

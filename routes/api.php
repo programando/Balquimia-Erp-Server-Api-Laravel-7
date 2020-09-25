@@ -36,12 +36,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         Route::get('rejected/{id}'     , 'FctrasElctrncasInvoicesController@invoiceRejected');
     });
 
-    Route::group(['prefix' => 'facturas-electronicas', 'namespace' => 'Api'], function () {
+/*     Route::group(['prefix' => 'facturas-electronicas', 'namespace' => 'Api'], function () {
         Route::get('/',                 'FctrasElctrncasController@index')->name('api.facturas.electronicas.index');
         Route::get('/{FctrasElctrnca}', 'FctrasElctrncasController@show')->name('api.facturas.electronicas.show');
-    });
+    }); */
 
-  
+
+Route::resource('facturas-electronicas', 'Api\FctrasElctrncaController', ['only'=> ['index', 'show']] );
+
 
 // NOTES
     Route::group(['prefix'=>'notes', 'namespace'=>'Api'], function() {

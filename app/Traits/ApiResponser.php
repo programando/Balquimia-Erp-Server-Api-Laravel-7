@@ -10,14 +10,14 @@ trait ApiResponser {
    }
 
    protected function errorResponse ( $message, $code ) {
-      return response()->json(['error' => $message, 'code' => $code], $code );
+      return response()->json(['error' => $message, 'statusCode' => $code], $code );
    }
    
    /*    Marzo 30 2020
       Retorna una colleccion de datos 
    */
    protected function showAll( Collection $collection, $code = 200){
-      return $this->succesReponse(['data' => $collection, 'code' => $code],  $code );
+      return $this->succesReponse(['data' => $collection, 'statusCode' => $code],  $code );
    }
    /*    Marzo 30 2020
       Retorna un solo dato 
