@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FctrasElctrncasHeaderResource extends JsonResource
+class FctrasElctrncasEmailSendSimpleRecord extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,9 +14,8 @@ class FctrasElctrncasHeaderResource extends JsonResource
      */
     public function toArray($request)
     {
-      return  [
-            "number"   => $this->resource->number,
-            'customer' => FctrasElctrncasCustomerResource::collection($this->whenLoaded('customer')),
+        return  [
+            'email' => $this->resource->email,
         ];
     }
 }

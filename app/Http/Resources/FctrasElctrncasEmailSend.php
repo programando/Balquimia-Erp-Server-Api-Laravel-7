@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\ShowRecordSimple;
- 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Resources\FctrasElctrncasEmailSendSimpleRecord;
 
-class ShowRecordCollection extends ResourceCollection
+class FctrasElctrncasEmailSend extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,13 +15,8 @@ class ShowRecordCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-          
-         return [
-            'data' => ShowRecordSimple::collection ( $this->collection),
-            
-/*             'customer' => [
-                'name' => $this->customer ,
-            ] */
+        return [
+            'data' =>    FctrasElctrncasEmailSendSimpleRecord::collection ( $this->collection),
         ];
     }
 }

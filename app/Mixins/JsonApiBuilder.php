@@ -27,6 +27,7 @@ use Illuminate\Support\Str;
                 if  (is_null($sort = request('sort')  ))  return $this;
                 
                 $sortFields   = Str::of( $sort )->explode(',') ;  // Campo por el que ordeno
+                
                 foreach ($sortFields as $sortField) {
                     $direction = 'asc';                                  // Orden por defecto
                         if ( Str::of( $sortField)->startsWith('-') ) {
