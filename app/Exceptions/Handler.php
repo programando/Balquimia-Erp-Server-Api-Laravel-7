@@ -97,7 +97,11 @@ class Handler extends ExceptionHandler
 
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
     {
-        return $this->ApiResponser(  $e->getMessage(), 422);
+               return $request->expectsJson()
+                    ? $this->invalidJson($request, $e)
+                    : $this->errorResponse(  $e->getMessage(), 422);;
+
+        //return $this->errorResponse(  $e->getMessage(), 422);
     }
 
 
