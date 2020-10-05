@@ -1,5 +1,8 @@
- php artisan serve --host=localhost --port=8000
- 
+php artisan serve --host=localhost --port=8000
+
+php artisan queue:work
+
+
  Crear Modelos
  --------------
     php artisan code:models --table=terceros_users
