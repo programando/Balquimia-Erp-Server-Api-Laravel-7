@@ -17,7 +17,7 @@ return [
 
     'paths'                    => ['*','/login','/logout','/reset/password','/update/password','/sanctum/csrf-cookie'],
     'allowed_methods'          => ['*'],
-    'allowed_origins'          => ['http://localhost:3000','https://facturas.plusoft.co' ],
+    'allowed_origins'          => ['http://localhost:3000','https://ventas.balquimia.com' ],
     'allowed_origins_patterns' => [],
     'allowed_headers'          => ['*'],
     'exposed_headers'          => false,
