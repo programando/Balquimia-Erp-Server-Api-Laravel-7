@@ -82,13 +82,28 @@ class FctrasElctrncasInvoicesController
     }
 
        public function invoiceSendToCustomer ( $id_fact_elctrnca ) {
-          $Factura      = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals', 'serviceResponse')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
-          $Factura      = $Factura[0];  
-          $this->getNameFilesTrait($Factura );
-          $this->invoiceCreateFilesToSend  ( $id_fact_elctrnca,  $Factura  ); 
+          $Factura      = $this->invoiceSendGetData ( $id_fact_elctrnca) ; 
           InvoiceWasCreatedEvent::dispatch          ( $Factura ) ; 
           InvoiceWasCreatedEventEmailCopy::dispatch ( $Factura );
        }
+
+
+        private function invoiceSendGetData ( $id_fact_elctrnca ) {
+             $Factura = FctrasElctrnca::with('customer','total', 'products', 'emails','additionals', 'serviceResponse')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
+             $Factura = $Factura[0];
+            $this->getNameFilesTrait($Factura );
+            $this->invoiceCreateFilesToSend  ( $id_fact_elctrnca,  $Factura  );
+            return $Factura;
+        }
+
+        public function invoiceFileDownload ( $fileType, $id_fact_elctrnca ) {
+            $this->invoiceSendGetData ( $id_fact_elctrnca) ;
+            if ( strtoupper( $fileType) == 'PDF') {
+                return response()->download( Storage::disk('Files')->path( $this->PdfFile ) )->deleteFileAfterSend();
+            }else {
+                return response()->download( Storage::disk('Files')->path( $this->XmlFile ) )->deleteFileAfterSend();
+            }
+        }
 
         private function invoiceCreateFilesToSend ( $id_fact_elctrnca,  $Factura  ){
             $Resolution   = $this->traitSoenacResolutionsInvoice();                

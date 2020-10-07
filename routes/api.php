@@ -32,17 +32,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::group(['prefix'=>'invoices', 'namespace'=>'Api'], function() {
         Route::get('/'                 , 'FctrasElctrncasInvoicesController@invoices')->name('invoices');
         Route::get('pdf/{id}'          , 'FctrasElctrncasInvoicesController@invoiceSendToCustomer');
+        Route::get('/download/{filetype}/{id}' , 'FctrasElctrncasInvoicesController@invoiceFileDownload');
+        
         Route::get('accepted/{id}'     , 'FctrasElctrncasInvoicesController@invoiceAccepted');
         Route::get('rejected/{id}'     , 'FctrasElctrncasInvoicesController@invoiceRejected');
+ 
     });
+ 
 
-/*     Route::group(['prefix' => 'facturas-electronicas', 'namespace' => 'Api'], function () {
-        Route::get('/',                 'FctrasElctrncasController@index')->name('api.facturas.electronicas.index');
-        Route::get('/{FctrasElctrnca}', 'FctrasElctrncasController@show')->name('api.facturas.electronicas.show');
-    }); */
-
-
-Route::resource('facturas-electronicas', 'Api\FctrasElctrncaController', ['only'=> ['index', 'show']] );
+Route::resource('facturas-electronicas', 'Api\FctrasElctrncaController', ['only'=> ['index', 'show', '']] );
 
 
 // NOTES
@@ -50,14 +48,3 @@ Route::resource('facturas-electronicas', 'Api\FctrasElctrncaController', ['only'
         Route::get('pdf/{id}'             , 'FctrasElctrncasNotesCrController@noteSendToCustomer');
         Route::get('{tpNote}'             , 'FctrasElctrncasNotesCrController@notes');
     });
-
-/*
-// INVOICES
-Route::get('invoices','Api\FctrasElctrncasInvoicesController@invoices')->name('invoices');
-Route::get('invoices/pdf/{id}'          , 'Api\FctrasElctrncasInvoicesController@invoiceSendToCustomer');
-Route::get('invoices/accepted/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceAccepted');
-Route::get('invoices/rejected/{id}'     , 'Api\FctrasElctrncasInvoicesController@invoiceRejected');
-// NOTES
-Route::get('notes/pdf/{id}'             , 'Api\FctrasElctrncasNotesCrController@noteSendToCustomer');
-Route::get('notes/{tpNote}'             ,'Api\FctrasElctrncasNotesCrController@notes');
-*/
