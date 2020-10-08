@@ -74,7 +74,7 @@ class FctrasElctrnca extends Model
 					'fcha_dcmnto'   => $this->fcha_dcmnto,
 					'diffForHumans' => $this->fcha_dcmnto->diffForHumans(),
 					'fecha-factura'        => $this->fcha_dcmnto->format('d-M-Y'),
-					'rspnse_dian'   => $this->rspnse_dian,
+					'rspnse_dian'   => $this->is_valid,
 			];
 		}
 
