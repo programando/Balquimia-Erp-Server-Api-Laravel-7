@@ -34,7 +34,8 @@ class FctrasElctrncasInvoicesController
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();       
             foreach ($Documentos as $Documento ) {
                 $this->invoicesToSend ( $Documento) ;
-                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;     
+                $response   = $this->ApiSoenac->postRequest( $URL, $this->jsonObject ) ;    
+                return  $response   ;
                 $this->traitUpdateJsonObject ( $Documento );
                 $this->documentsProcessReponse( $Documento, $response ) ;
                  
