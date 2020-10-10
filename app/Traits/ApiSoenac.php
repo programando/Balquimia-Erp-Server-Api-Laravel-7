@@ -14,8 +14,8 @@ trait ApiSoenac {
       }
 
       public function traitSoenacResolutions() {
-         $Resoluciones = Cache::tags('ResolucionesJulio')
-                    ->rememberForEver('ResolucionesJulio', function() {
+         $Resoluciones = Cache::tags('ResolucOctubre2020')
+                    ->rememberForEver('ResolucOctubre2020', function() {
                              return $this->ApiSoenac->getRequest('config/resolutions' ) ; 
                    }
            );
@@ -23,16 +23,16 @@ trait ApiSoenac {
       }
       
       public function traitSoenacResolutionsInvoice() {
-         $Resolutions =   $this->traitSoenacResolutions(); //$this->ApiSoenac->getRequest('config/resolutions' ) ; 
+         $Resolutions =   $this->traitSoenacResolutions();  
          foreach ($Resolutions as $Resolution) {
-            if ( $Resolution['id'] === 4 ){
+            if ( $Resolution['id'] === 7 ){
                return $Resolution;
             }
          }
       }
 
       public function traitSoenacResolutionsNotes() {
-         $Resolutions =   $this->traitSoenacResolutions(); //$this->ApiSoenac->getRequest('config/resolutions' ) ; 
+         $Resolutions =   $this->traitSoenacResolutions();  
          foreach ($Resolutions as $Resolution) {
             if ( $Resolution['id'] === 2 ){
                return $Resolution;
