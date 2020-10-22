@@ -6,3 +6,9 @@ php artisan queue:work
  Crear Modelos
  --------------
     php artisan code:models --table=terceros_users
+
+Consultas mas eficientes
+   https://programacionymas.com/blog/consultas-laravel-eficientes-usando-eloquent
+
+
+https://www.google.com/drive/download/
