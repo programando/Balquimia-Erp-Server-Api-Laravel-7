@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+ 
 
 // INVOICES
     Route::group(['prefix'=>'invoices', 'namespace'=>'Api'], function() {
@@ -42,6 +43,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('facturas-electronicas', 'Api\FctrasElctrncaController', ['only'=> ['index', 'show', '']] );
 
+
+   Route::group(['prefix'=>'productos', 'namespace'=>'Api'], function() {
+        Route::get('/precios'           , 'PrdctoController@listaPrecios')->name('precios');
+
+    });
 
 // NOTES
     Route::group(['prefix'=>'notes', 'namespace'=>'Api'], function() {

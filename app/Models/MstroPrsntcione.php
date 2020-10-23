@@ -20,7 +20,7 @@ class MstroPrsntcione extends Model
 	];
 
 	protected $fillable = [
-		'nom_prsntciones',
+		'nom_prsntcion',
 		'capac_volum',
 		'cant_und_empque',
 		'dscrpcion',

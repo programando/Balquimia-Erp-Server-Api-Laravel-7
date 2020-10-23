@@ -13,12 +13,11 @@ use Illuminate\Database\Eloquent\Collection;
  
 class FctrasElctrnca extends Model
 {
-	protected $table      = 'fctras_elctrncas';
-	protected $primaryKey = 'id_fact_elctrnca';
-	public    $timestamps = false;
-	
+	protected $primaryKey   = 'id_fact_elctrnca';
+	protected $table        = 'fctras_elctrncas';
+	public    $allowedSorts = ['fcha_dcmnto'];
+	public    $timestamps   = false;
 	public    $type         = 'facturas-electronicas';
-  public    $allowedSorts = ['fcha_dcmnto'];
 
 	protected $casts = [
 		'number'            => 'int',

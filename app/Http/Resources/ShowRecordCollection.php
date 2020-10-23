@@ -19,10 +19,6 @@ class ShowRecordCollection extends ResourceCollection
           
          return [
             'data' => ShowRecordSimple::collection ( $this->collection),
-            
-/*             'customer' => [
-                'name' => $this->customer ,
-            ] */
         ];
     }
 }

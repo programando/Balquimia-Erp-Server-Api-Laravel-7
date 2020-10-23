@@ -16,13 +16,12 @@ class FctrasElctrncaController extends ApiController
     {
         $FctrasElctrnca = FctrasElctrnca::with('customer','emails')->applySorts()->jsonPaginate();
         //$FctrasElctrnca = FctrasElctrnca::with('customer','emails')->get();
-        //return $FctrasElctrnca;
+        // return $FctrasElctrnca ;
         return ShowRecordCollection::make( $FctrasElctrnca );
     }
 
  
-    public function show($idfcatura)
-    {
+    public function show($idfcatura)    {
        $FctrasElctrnca = FctrasElctrnca::findOrFail( $idfcatura);
         return ShowRecordSimple::make( $FctrasElctrnca);
     }
