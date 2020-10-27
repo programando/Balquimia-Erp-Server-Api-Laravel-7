@@ -85,8 +85,8 @@ class Handler extends ExceptionHandler
             return $this->errorResponse( $exception->getMessage() , $exception->getStatusCode());
         }
         if ($exception instanceof  QueryException ) {
-              $errosCode = $exception->errorInfo[1];
-              if ( $errosCode == 1451) 
+              $errorCode = $exception->errorInfo[1];
+              if ( $errorCode == 1451) 
                 return $this->errorResponse( 'No es posible borrar el registro porque causaría inconsistencia en la base de datos', 409);
         }   
         if ( config('app.debug')) {
