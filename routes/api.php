@@ -46,8 +46,12 @@ Route::resource('facturas-electronicas', 'Api\FctrasElctrncaController', ['only'
 
    Route::group(['prefix'=>'productos', 'namespace'=>'Api'], function() {
         Route::get('/precios'           , 'PrdctoController@listaPrecios')->name('precios');
-
     });
+
+   Route::group(['prefix'=>'lineas', 'namespace'=>'Api'], function() {
+        Route::get('/activas'           , 'MstroLineasController@activas')->name('lineasactivas');
+    });
+
 
 // NOTES
     Route::group(['prefix'=>'notes', 'namespace'=>'Api'], function() {

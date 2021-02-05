@@ -14,7 +14,7 @@
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.5",
         "laravel/framework": "^7.0",
-        "laravel/sanctum": "^2.3",
+        "laravel/sanctum": "^2.9",
         "laravel/tinker": "^2.0",
         "nyholm/psr7": "^1.2",
         "predis/predis": "^1.1",
