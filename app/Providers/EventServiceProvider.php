@@ -29,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\UserPasswordResetEvent' => [
             'App\Listeners\UserPasswordReset',
+        ],
+       'App\Events\TercerosContactosEvent' => [
+           'App\Listeners\TercerosContactosListener',  
         ]
     ];
 

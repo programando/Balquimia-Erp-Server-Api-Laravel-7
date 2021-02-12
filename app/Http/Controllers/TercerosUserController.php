@@ -41,6 +41,7 @@ class TercerosUserController extends Controller
 
 
     public function resetPassword ( TercerosUserLoginRequest $FormData ){
+         
         $User = TercerosUser::where('email', $FormData->email)->first();
         if ( ! $User->autorizado || $User->inactivo ) {
             $this->ErrorMessage (  Lang::get("validation.custom.UserLogin.inactive-user") );
@@ -53,7 +54,7 @@ class TercerosUserController extends Controller
     }
 
     public function updatePassword ( TercerosUserLoginRequest $FormData ){
-        $User       = $User = TercerosUser::where('tmp_token', $FormData->token)->first();
+        $User = TercerosUser::where('tmp_token', $FormData->token)->first();
       
         $this->tokenValidate           ( $User  );
         $this->tokenExpirationValidate ( $User  );
