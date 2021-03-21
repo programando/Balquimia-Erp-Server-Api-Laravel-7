@@ -22,7 +22,6 @@ class TercerosUserController extends Controller
     
     public function login ( TercerosUserLoginRequest $FormData ){
         
-        /* if ( Auth::attempt($FormData->only('email', 'password', 'autorizado') )) { */
          if (Auth::attempt( [
                   'email'    => $FormData->email,
                   'password' => $FormData->password,

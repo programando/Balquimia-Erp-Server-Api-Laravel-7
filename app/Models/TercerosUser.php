@@ -42,4 +42,6 @@ class TercerosUser extends Authenticatable
 				return trim ( $value );
 			}
 
+			
+
 }

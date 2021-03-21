@@ -13,8 +13,9 @@ class TercerosContactosListener
     
     public function handle( TercerosContactosEvent $event)
     {
+        
         $when           = now()->addSeconds(3); 
-         Mail::to( env('EMAILS_CONTACTOS'))
-            ->later( $when, new TercerosContactosMail (  $event->formDataContact )); 
+         Mail::to( env('EMAILS_CONTACTOS') )
+            ->later( $when, new TercerosContactosMail (  $event->email, $event->comentario )); 
     }
 }

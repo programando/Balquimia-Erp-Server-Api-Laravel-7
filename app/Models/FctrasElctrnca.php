@@ -105,6 +105,9 @@ class FctrasElctrnca extends Model
 		}
 		
 
+ 
+
+
 		// SCOPES
 		//=========
 			public function scopeInvoicesToSend ( $query ){

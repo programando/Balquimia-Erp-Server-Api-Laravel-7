@@ -26,9 +26,9 @@ class TercerosContactosRequest extends FormRequest
         return [
              'nombre'        => ['required', 'string'],
              'email'         => ['required', 'email'],
-              'telefono'      => ['required', 'numeric'],
-            'celular'       => ['required', 'numeric'],
-               'comentario'    => ['required', 'string'],  
+             'telefono'      => ['required' ],
+             'celular'       => ['required' ],
+             'comentario'    => ['required', 'string'],  
         ];
     }
 }

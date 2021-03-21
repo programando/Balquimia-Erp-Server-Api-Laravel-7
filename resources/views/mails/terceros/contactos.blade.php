@@ -37,13 +37,13 @@
                                        font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';max-width:100vw;padding:32px">
                                        Ha recibido este correo electónico desde la página de balquimia.com <br>
 
-                                       <p> {{ $nombre }} </p>
+                                       <p> {{ $comentario }} </p>
                                        <p>  Interesado(a) en :</p>
                                        <p> &nbsp;&nbsp;&nbsp; {{ $comentario }} </p>
                                        <p>  Empresa : </p>
-                                       <p> &nbsp;&nbsp;&nbsp; {{ $empresa   }}    </p>
+                                       <p> &nbsp;&nbsp;&nbsp; {{ $comentario   }}    </p>
                                        <p> Números de contacto : </p>
-                                       <p>  &nbsp;&nbsp;&nbsp; {{ $celular  }} / {{ $telefono }} </p>
+                                       <p>  &nbsp;&nbsp;&nbsp; {{ $comentario  }} / {{ $comentario }} </p>
                                        
                                     </td>
                                  </tr>

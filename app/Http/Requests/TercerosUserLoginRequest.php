@@ -51,7 +51,7 @@ class TercerosUserLoginRequest extends FormRequest
 
     private function updatePassword() {
           return [
-                  'password'  => ['required','confirmed','min:6'],
+                  'password'  => ['required','confirmed','min:7'],
           ];
     }
 
@@ -61,7 +61,7 @@ class TercerosUserLoginRequest extends FormRequest
         'email.exists' => 'Cuenta de correo (Email) no encontrada en nuestros registros',
         'password.confirmed' => 'La contraseña y su confirmación no son iguales.',
         'password.required' => 'La contraseña y su confirmación son campos obligatorios',
-        'password.min' => 'La contraseña debe tener al menos 6 caracteres',
+        'password.min' => 'La contraseña debe tener al menos 7 caracteres',
       ];
     }
 

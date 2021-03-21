@@ -27,16 +27,33 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
- 
+//PRODUCTOS
+Route::group(['prefix'=>'productos', 'namespace'=>'Api', 'middleware' => ['auth:sanctum']], function() {
+        Route::get('/precios'                 , 'PrdctoController@listaPrecios')->name('lista-precios');
+ });
+
+//CARTERA CLIENTES CxC
+
+Route::group(['prefix'=>'cartera', 'namespace'=>'Api'], function(){
+    $localController = 'CarteraFacturasController@';
+    Route::get('/clientes'                 , $localController.'clientesCxcPorVendedor');
+    Route::get('/cliente/facturas'         , $localController.'facturasPorNit');
+ });
+
+Route::group(['prefix'=>'ventas', 'namespace'=>'Api'], function(){
+    $localController = 'BtcraVtasController@';
+    Route::get('/vendedor'                 , $localController.'ventasVendedorUltimosDosAnios');
+ });
+
 
 // INVOICES
     Route::group(['prefix'=>'invoices', 'namespace'=>'Api'], function() {
-        Route::get('/'                 , 'FctrasElctrncasInvoicesController@invoices')->name('invoices');
-        Route::get('pdf/{id}'          , 'FctrasElctrncasInvoicesController@invoiceSendToCustomer');
-        Route::get('/download/{filetype}/{id}' , 'FctrasElctrncasInvoicesController@invoiceFileDownload');
-        
-        Route::get('accepted/{id}'     , 'FctrasElctrncasInvoicesController@invoiceAccepted');
-        Route::get('rejected/{id}'     , 'FctrasElctrncasInvoicesController@invoiceRejected');
+        $localController = 'FctrasElctrncasInvoicesController@';
+        Route:: get('/'                          , $localController.'invoices')->name('invoices');
+        Route:: get('pdf/{id}'                   , $localController.'invoiceSendToCustomer');
+        Route:: get('/download/{filetype}/{id}'  , $localController.'invoiceFileDownload');
+        Route:: get('accepted/{id}'              , $localController.'invoiceAccepted');
+        Route:: get('rejected/{id}'              , $localController.'invoiceRejected');
  
     });
  
@@ -47,11 +64,6 @@ Route::resource('facturas-electronicas', 'Api\FctrasElctrncaController', ['only'
    Route::group(['prefix'=>'productos', 'namespace'=>'Api'], function() {
         Route::get('/precios'           , 'PrdctoController@listaPrecios')->name('precios');
     });
-
-   Route::group(['prefix'=>'lineas', 'namespace'=>'Api'], function() {
-        Route::get('/activas'           , 'MstroLineasController@activas')->name('lineasactivas');
-    });
-
 
 // NOTES
     Route::group(['prefix'=>'notes', 'namespace'=>'Api'], function() {
