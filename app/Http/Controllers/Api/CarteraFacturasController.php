@@ -17,5 +17,9 @@ class CarteraFacturasController extends Controller
         return Cartera::FacturasPorNit ( $formData->nitCliente);
     }
 
+    public function totalPorVendedor (Request $formData) {
+        return Cartera::TotalPorVendedor (  $formData->idTercVendedor );
+    }
+
 
 }

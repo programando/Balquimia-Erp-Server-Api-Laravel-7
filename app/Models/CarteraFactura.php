@@ -30,17 +30,25 @@ class CarteraFactura extends Model
 
 			// SCOPES
 		//=========
-			public function scopeClientesPorVendedor ( $query, $idVendedor ){
-				 $ClientesPorVendedor  = Cache::tags('ClientesPorVendedor ')->remember('ClientesPorVendedor ',60,   function(  )  use ($idVendedor)  {   
-              return     DB::select(' call cartera_clientes_cxc_por_vendedor ( ?)', array($idVendedor));
+			public function scopeClientesPorVendedor ( $query, $idTercVendedor ){
+				 $nomCache            = 'ClientesPorVendedor'.$idTercVendedor ;
+				 $ClientesPorVendedor = Cache::tags($nomCache)->remember($nomCache,60,   function(  )  use ($idTercVendedor)  {   
+              return     DB::select(' call cartera_clientes_cxc_por_vendedor ( ?)', array($idTercVendedor));
         });
         return $ClientesPorVendedor ;
 			}
 
 			public function scopeFacturasPorNit( $query, $nitCliente ){
 					return     DB::select(' call cartera_clientes_facturas_por_nit ( ?)', array( "$nitCliente"));
-					
+			}
 
+			public function scopeTotalPorVendedor($query, $idTercVendedor) {
+				 $nomCache            = 'TotalPorVendedor'.$idTercVendedor ;
+				 $TotalPorVendedor = Cache::tags($nomCache)->remember($nomCache,60,   function(  )  use ($idTercVendedor)  {   
+              return     DB::select(' call cartera_clientes_facturas_por_id_vendedor ( ?)', array($idTercVendedor));
+        });
+        return $TotalPorVendedor ;
+				
 			}
 			
 }

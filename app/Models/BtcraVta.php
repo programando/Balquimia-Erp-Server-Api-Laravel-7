@@ -155,7 +155,8 @@ class BtcraVta extends Model
 	];
 
 	public function scopevendedorUltimosDosAnios( $query, $idTercVendedor) {
-			 $VtasUltimosDosAnios  = Cache::tags('VtasVendedorUltimosDosAnios ')->remember('VtasVendedorUltimosDosAnios ',60,   function(  )  use ($idTercVendedor)  {   
+		   $nomCahe = 'VtasVendedorUltimosDosAnios'.$idTercVendedor;
+			 $VtasUltimosDosAnios  = Cache::tags( $nomCahe )->remember( $nomCahe ,60,   function(  )  use ($idTercVendedor)  {   
               return     DB::select(' call comercial_rptes_vta_vendedor_ultimos_2_anios ( ?)', array($idTercVendedor));
         });
         return $VtasUltimosDosAnios ;
