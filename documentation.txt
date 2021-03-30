@@ -5,7 +5,7 @@ php artisan queue:work
 
  Crear Modelos
  --------------
-    php artisan code:models --table=cartera_facturas
+    php artisan code:models --table=terceros
 
 Consultas mas eficientes
    https://programacionymas.com/blog/consultas-laravel-eficientes-usando-eloquent
