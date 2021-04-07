@@ -112,7 +112,6 @@ class FctrasElctrncasNotesCrController
     public function noteSendToCustomer ( $id_fact_elctrnca ) {
         $Note = FctrasElctrnca::with('customer','total', 'products', 'emails', 'Additionals', 'noteBillingReference','noteDiscrepancy','serviceResponse')->where('id_fact_elctrnca','=', $id_fact_elctrnca)->get();
         $Note = $Note[0];
-        dd(  $Note);
         $this->getNameFilesTrait($Note, true );
         $this->noteCreateFilesToSend ( $id_fact_elctrnca, $Note);
         NoteWasCreatedEvent::dispatch ($Note);
