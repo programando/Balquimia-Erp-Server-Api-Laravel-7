@@ -33,12 +33,18 @@ Route::group(['prefix'=>'productos', 'namespace'=>'Api', 'middleware' => ['auth:
  });
 
 //CARTERA CLIENTES CxC
-
 Route::group(['prefix'=>'cartera', 'namespace'=>'Api'], function(){
     $localController = 'CarteraFacturasController@';
     Route::get('/clientes'                 , $localController.'clientesCxcPorVendedor');
     Route::get('/cliente/facturas'         , $localController.'facturasPorNit');
     Route::get('/vendedor/total'           , $localController.'totalPorVendedor');
+ });
+
+
+//PINES PARA PAGO ELECTRONICO
+Route::group(['prefix'=>'pin', 'namespace'=>'Api'], function(){
+    $localController = 'PinesPgoElectronicoController@';
+    Route::get('/buscar'                 , $localController.'buscar');
  });
 
 Route::group(['prefix'=>'ventas', 'namespace'=>'Api'], function(){
