@@ -45,7 +45,7 @@ class FctrasElctrncasNotesCrController
       private function notesToSend ( $Notes, $TipoNota ){
         $this->jsonObject = [];
         $id_fact_elctrnca = $Notes['id_fact_elctrnca'];    
-        $otherDataNote = FctrasElctrnca::with('customer','total', 'products', 'emails','noteBillingReference','noteDiscrepancy')->where('id_fact_elctrnca', $id_fact_elctrnca)->get();   
+        $otherDataNote = FctrasElctrnca::with('customer','total', 'products', 'emails','noteBillingReference','noteDiscrepancy','charges')->where('id_fact_elctrnca', $id_fact_elctrnca)->get();   
         $this->jsonObjectCreate ($Notes , $otherDataNote, $TipoNota  );           
       }
 
@@ -60,6 +60,7 @@ class FctrasElctrncasNotesCrController
             $this->traitOrderReference           ( $Note      , $this->jsonObject  );
             $this->traitReceiptDocumentReference ( $Note      , $this->jsonObject  );
             $this->traitCustomer                 ( $Others[0]['customer']  , $this->jsonObject  );
+            //$this->traitCharges                  ( $Others[0]['charges']  , $this->jsonObject  );
             $this->traitLegalMonetaryTotals      ( $Others[0]['total']     , $this->jsonObject, $this->keyMonetary  );
             $this->traitInvoiceLines             ( $Others[0]['products']  , $this->jsonObject, $this->keyLines  );  
         }

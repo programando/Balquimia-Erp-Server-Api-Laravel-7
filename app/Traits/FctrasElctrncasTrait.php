@@ -94,6 +94,17 @@ trait FctrasElctrncasTrait {
             $jsonObject['payment_forms'][] =$payment;
         }
 
+        protected function traitCharges( $Document, &$jsonObject  ) {
+            $charges = [
+                'charge_indicator'        => $Document["charge_indicator"],
+                'discount_id'             => $Document["discount_id"],
+                'allowance_charge_reason' => $Document["allowance_charge_reason"],
+                'amount'                  => $Document["amount"],
+                'base_amount'             => $Document["base_amount"],
+            ];
+            $jsonObject['allowance_charges'][] =$charges;
+        }
+
  
 
         protected function traitLegalMonetaryTotals ( $Totals, &$jsonObject, $key  ) {

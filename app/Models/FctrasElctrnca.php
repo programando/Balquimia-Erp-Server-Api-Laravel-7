@@ -7,7 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use App\Events\NewInvoice;
+//use App\Events\NewInvoice;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
  
@@ -103,7 +103,11 @@ class FctrasElctrnca extends Model
 		public function serviceResponse() {
 			return $this->hasOne(FctrasElctrncasDataResponse::class, 'id_fact_elctrnca');
 		}
-		
+	
+			public function charges() {
+			return $this->hasOne(FctrasElctrncasAllowanceCharges::class, 'id_fact_elctrnca');
+		}
+
 
  
 

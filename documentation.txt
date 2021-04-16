@@ -15,6 +15,14 @@ https://www.google.com/drive/download/
 
 
 composer dump-autoload -o
-
 php artisan config:clear
 php artisan cache:clear
+php artisan config:cache
+
+
+Funcionó Abril 13 2021
+---------------------------
+composer dump-autoload
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
