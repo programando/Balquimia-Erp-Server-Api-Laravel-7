@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\FctrasElctrnca;
 
-use App\Http\Api\Controllers\ApiController;
+ 
+use App\Http\Controllers\ApiController;
 use App\Http\Resources\ShowRecordSimple;
 use App\Http\Resources\ShowRecordCollection;
 
