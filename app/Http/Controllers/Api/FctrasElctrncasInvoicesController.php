@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use App\Http\Controllers\ApiController;
+use App\Http\Api\Controllers\ApiController;
 use Illuminate\Http\Request;
 
 use App\Traits\ApiSoenac;
