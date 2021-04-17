@@ -32,11 +32,23 @@ class PinesPgoElectronico extends Model
 
 	protected $fillable = [	'valor_pin', 'nro_pin' ];
 
-			public function scopeBuscarPin( $query, $Nro_Pin) {  
-				return     DB::select(' call pines_pago_electronico_buscar ( ?)', array("$Nro_Pin"));
+			public function scopeBuscarPin( $query, $nro_pin) {  
+				return     DB::select(' call pines_pago_electronico_buscar_pin ( ?)', array("$nro_pin"));
 			}
 
+			public function scopeBuscarPedido( $query, $id_ped) {  
+				return     DB::select(' call pines_pago_electronico_buscar_pedido ( ?)', array($id_ped));
+			}
+
+			public function scopeBuscarFactura( $query, $prfjo_rslcion, $num_fact) {  
+				return     DB::select(' call pines_pago_electronico_buscar_factura ( ?, ?)', array("$prfjo_rslcion", $num_fact));
+			}
+ 
 			public function getNomFullAttribute( $value) {
+					return trim($value);
+			}
+
+			public function getEmailAttribute( $value ) {
 					return trim($value);
 			}
 	}

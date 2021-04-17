@@ -41,9 +41,11 @@ Route::group(['prefix'=>'cartera', 'namespace'=>'Api'], function(){
 
 
 //PINES PARA PAGO ELECTRONICO
-Route::group(['prefix'=>'pin', 'namespace'=>'Api'], function(){
+Route::group([ 'namespace'=>'Api'], function(){
     $localController = 'PinesPgoElectronicoController@';
-    Route::get('/buscar'                 , $localController.'buscar');
+    Route::get('/pin'               , $localController.'buscarPin');
+    Route::get('/pedido'            , $localController.'buscarPedido');
+    Route::get('/factura'            , $localController.'buscarFactura');
  });
 
 Route::group(['prefix'=>'ventas', 'namespace'=>'Api'], function(){
@@ -66,16 +68,15 @@ Route::group(['prefix'=>'terceros', 'namespace'=>'Api'], function(){
         Route:: get('/download/{filetype}/{id}'  , $localController.'invoiceFileDownload');
         Route:: get('accepted/{id}'              , $localController.'invoiceAccepted');
         Route:: get('rejected/{id}'              , $localController.'invoiceRejected');
- 
     });
  
 
 Route::resource('facturas-electronicas', 'Api\FctrasElctrncaController', ['only'=> ['index', 'show', '']] );
 
 
-   Route::group(['prefix'=>'productos', 'namespace'=>'Api'], function() {
+Route::group(['prefix'=>'productos', 'namespace'=>'Api'], function() {
         Route::get('/precios'           , 'PrdctoController@listaPrecios')->name('precios');
-    });
+ });
 
 // NOTES
     Route::group(['prefix'=>'notes', 'namespace'=>'Api'], function() {
