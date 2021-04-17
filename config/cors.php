@@ -17,7 +17,8 @@ return [
 
     'paths'                    => ['*','/login','/logout','/reset/password','/update/password','/sanctum/csrf-cookie'],
     'allowed_methods'          => ['*'],
-    'allowed_origins'          => ['http://localhost:3000','https://ventas.balquimia.com', 'https://computron.balquimia.com', 'https://api.balquimia.com','https://pagos.balquimia.com' ],
+/*     'allowed_origins'          => ['http://localhost:3000','https://ventas.balquimia.com', 'https://computron.balquimia.com', 'https://api.balquimia.com','https://pagos.balquimia.com' ], */
+    'allowed_origins'          => ['http://localhost:3000','.balquimia.com', 'http://localhost:3001' ],
     'allowed_origins_patterns' => [],
     'allowed_headers'          => ['*'],
     'exposed_headers'          => false,
