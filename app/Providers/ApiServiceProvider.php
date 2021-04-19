@@ -25,7 +25,6 @@ class ApiServiceProvider extends ServiceProvider
         \App::bind( '/Helpers/NumbersHelper.php' );
         \App::bind( '/Helpers/StringsHelper.php' );
         \App::bind( '/Helpers/UsersHelper.php' );
-
         \App::bind( '/Librarys/GuzzleHttp.php' );
         
     }
