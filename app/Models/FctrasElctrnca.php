@@ -104,9 +104,9 @@ class FctrasElctrnca extends Model
 			return $this->hasOne(FctrasElctrncasDataResponse::class, 'id_fact_elctrnca');
 		}
 	
-			public function charges() {
+/* 			public function charges() {
 			return $this->hasOne(FctrasElctrncasAllowanceCharges::class, 'id_fact_elctrnca');
-		}
+		} */
 
 
  
