@@ -1,6 +1,7 @@
 <?php 
 namespace App\Librarys;
 
+use config;
 use GuzzleHttp\Client;
 
 class GuzzleHttp {
@@ -10,7 +11,7 @@ class GuzzleHttp {
 
     public function __construct( ) {      
         $this->Guzzle = new Client([
-            'base_uri' => env('FACTURA_ELECT_URL_BASE'),
+            'base_uri' => config('company.FACTURA_ELECT_URL_BASE'),
             'exceptions' => false,
         ]);
          $this->headers     = [
@@ -18,7 +19,7 @@ class GuzzleHttp {
                 'Accept'          => 'application/json',
                 'Connection'      => 'keep-alive',
                 'http_errors'     => true,
-                'Authorization'   => env('FACTURA_ELECT_TOKEN'),
+                'Authorization'   => config('company.FACTURA_ELECT_TOKEN'),
          ];  
       }
 
