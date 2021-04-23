@@ -81,9 +81,9 @@ class Handler extends ExceptionHandler
         if ($exception instanceof  MethodNotAllowedHttpException ) {
             return $this->errorResponse("Método no permitido."  , 405);
         }        
-        if ($exception instanceof  HttpException ) {
+        //if ($exception instanceof  HttpException ) {
             return $this->errorResponse( $exception->getMessage() , $exception->getStatusCode());
-        }
+        //}
         if ($exception instanceof  QueryException ) {
               $errorCode = $exception->errorInfo[1];
               if ( $errorCode == 1451) 
