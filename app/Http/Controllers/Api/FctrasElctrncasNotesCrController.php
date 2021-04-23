@@ -37,8 +37,8 @@ class FctrasElctrncasNotesCrController
       }
 
      private function getNotesUrl ($TipoNota) {
-            if ( $TipoNota  == 'cr')  return 'credit-note/'. env('FACTURA_ELECT_TEST_ID');
-            if ( $TipoNota  == 'db')  return 'debit-note/' . env('FACTURA_ELECT_TEST_ID');
+            if ( $TipoNota  == 'cr')  return 'credit-note';
+            if ( $TipoNota  == 'db')  return 'debit-note' ;
             return 'NoUrl';
         }
 
