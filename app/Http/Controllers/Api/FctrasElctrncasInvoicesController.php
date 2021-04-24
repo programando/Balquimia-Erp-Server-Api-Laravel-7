@@ -31,7 +31,7 @@ class FctrasElctrncasInvoicesController
   
  
         public function invoices() {
-            $URL = 'invoice/' . config('company.FACTURA_ELECT_TEST_ID');
+            $URL = 'invoice'  ;
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();       
             foreach ($Documentos as $Documento ) {
                 $this->invoicesToSend ( $Documento) ;
