@@ -1,26 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use App\Http\Controllers\ApiController;
-use Illuminate\Http\Request;
 
 use App\Traits\ApiSoenac;
+
 use App\Traits\PdfsTrait;
 use App\Traits\QrCodeTrait;
-use App\Traits\FctrasElctrncasTrait;
-
 use App\Helpers\DatesHelper;
-use App\Helpers\GeneralHelper  ;
+use Illuminate\Http\Request;
 
+use App\Helpers\GeneralHelper  ;
 use App\Models\FctrasElctrnca   ;
+
+use App\Traits\FctrasElctrncasTrait;
 use App\Models\FctrasElctrncasMcipio;
  
 use App\Events\InvoiceWasCreatedEvent;
+use App\Http\Controllers\ApiController;
 use App\Events\InvoiceWasCreatedEventEmailCopy;
 
 Use Storage;
 Use Carbon;
-
+use config;
 
 class FctrasElctrncasInvoicesController  
 {
@@ -30,7 +31,7 @@ class FctrasElctrncasInvoicesController
   
  
         public function invoices() {
-            $URL = 'invoice';
+            $URL = 'invoice/' . config('company.FACTURA_ELECT_TEST_ID');
             $Documentos = FctrasElctrnca::InvoicesToSend()->get();       
             foreach ($Documentos as $Documento ) {
                 $this->invoicesToSend ( $Documento) ;
