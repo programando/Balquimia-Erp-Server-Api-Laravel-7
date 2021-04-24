@@ -31,13 +31,14 @@ class GuzzleHttp {
       }
 
     public function postRequest ( $URL,$Body){
-         dd ($this->Guzzle);
+         
          $response = $this->Guzzle->request(
             'POST', $URL, [ 
                'headers' => $this->headers ,
                'json'    => $Body,
                'debug'   => true
             ]); 
+            dd ( $response );
             return json_decode($response->getBody()->getContents(),true);
             
       
