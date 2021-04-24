@@ -31,7 +31,6 @@ class GuzzleHttp {
       }
 
     public function postRequest ( $URL,$Body){
-         
          $response = $this->Guzzle->request(
             'POST', $URL, [ 
                'headers' => $this->headers ,
@@ -39,8 +38,6 @@ class GuzzleHttp {
                'debug'   => true
             ]); 
             return json_decode($response->getBody()->getContents(),true);
-            
-      
     }
  
  
