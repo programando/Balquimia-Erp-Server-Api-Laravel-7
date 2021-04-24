@@ -38,7 +38,7 @@ class GuzzleHttp {
                'json'    => $Body,
                'debug'   => true
             ]); 
-            dd ( $response );
+            dd ( $response->getBody() );
             return json_decode($response->getBody()->getContents(),true);
             
       
