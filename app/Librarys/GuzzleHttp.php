@@ -31,7 +31,7 @@ class GuzzleHttp {
       }
 
     public function postRequest ( $URL,$Body){
-         dd ( $URL);
+         dd ( $this->headers);
          $response = $this->Guzzle->request(
             'POST', $URL, [ 
                'headers' => $this->headers ,
