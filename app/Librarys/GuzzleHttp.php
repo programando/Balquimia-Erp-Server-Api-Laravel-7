@@ -47,10 +47,10 @@ class GuzzleHttp {
                // Get response body
                // Modify message as proper response
                $message = $e->getResponse()->getBody();
-               return (string) $exception;
+               dd( (string) $exception );
             }
             else {
-               return $e->getMessage();
+               dd( $e->getMessage());
             }
       }
 
