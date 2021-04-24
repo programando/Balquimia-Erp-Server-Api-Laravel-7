@@ -3,6 +3,7 @@ namespace App\Librarys;
 
 use config;
 use GuzzleHttp\Client;
+use App\Librarys\GuzzleHttp;
 
 class GuzzleHttp {
     protected $url;
@@ -32,13 +33,27 @@ class GuzzleHttp {
 
     public function postRequest ( $URL,$Body){
          
+        try {
          $response = $this->Guzzle->request(
             'POST', $URL, [ 
                'headers' => $this->headers ,
-               'json'    => $Body,
-               'debug'   => true
+               'json'    => $Body 
+               //'debug'   => true
             ]); 
             return json_decode($response->getBody()->getContents(),true);
+        }
+        catch (GuzzleHttp\Exception\RequestException $e) {
+            if ($e->hasResponse()) {
+               // Get response body
+               // Modify message as proper response
+               $message = $e->getResponse()->getBody();
+               return (string) $exception;
+            }
+            else {
+               return $e->getMessage();
+            }
+      }
+
       
     }
  
