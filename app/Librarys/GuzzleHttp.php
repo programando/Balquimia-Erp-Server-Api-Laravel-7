@@ -12,7 +12,7 @@ class GuzzleHttp {
     public function __construct( ) {      
         $this->Guzzle = new Client([
             'base_uri' => config('company.FACTURA_ELECT_URL_BASE'),
-            'exceptions' => true,
+            'exceptions' => false,
         ]);
          $this->headers     = [
                 'Content-Type'    => 'application/json',
@@ -38,7 +38,6 @@ class GuzzleHttp {
                'json'    => $Body,
                'debug'   => true
             ]); 
-            dd ( $response->getBody() );
             return json_decode($response->getBody()->getContents(),true);
             
       
