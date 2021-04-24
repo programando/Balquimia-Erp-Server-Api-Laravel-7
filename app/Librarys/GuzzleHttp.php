@@ -12,7 +12,7 @@ class GuzzleHttp {
     public function __construct( ) {      
         $this->Guzzle = new Client([
             'base_uri' => config('company.FACTURA_ELECT_URL_BASE'),
-            'exceptions' => false,
+            'exceptions' => true,
         ]);
          $this->headers     = [
                 'Content-Type'    => 'application/json',
