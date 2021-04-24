@@ -35,7 +35,8 @@ class GuzzleHttp {
          $response = $this->Guzzle->request(
             'POST', $URL, [ 
                'headers' => $this->headers ,
-               'json'    => $Body
+               'json'    => $Body,
+               'debug'   => true
             ]); 
             return json_decode($response->getBody()->getContents(),true);
       
