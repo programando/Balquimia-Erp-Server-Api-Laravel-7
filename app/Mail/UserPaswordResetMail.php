@@ -16,10 +16,10 @@ class UserPaswordResetMail extends Mailable
 
     public function __construct( $Email, $Token )
     {
-        $this->Email = $Email;
-        $this->Token = $Token;
-        $this->from = ['address'=> env('EMAIL_SISTEMAS'), 'name' => config('balquimia.EMPRESA' )];
-        $this->urlClient = env('APP_URL_CLIENT') . env('URL_USER_PASSWORD_RESET').$Token;
+        $this->Email     = $Email;
+        $this->Token     = $Token;
+        $this->from      = ['address'=> config('balquimia.EMAIL_SISTEMAS'), 'name' => config('balquimia.EMPRESA' )];
+        $this->urlClient = config('balquimia.APP_URL_CLIENT') . config('balquimia.URL_USER_PASSWORD_RESET').$Token;
     }
 
   

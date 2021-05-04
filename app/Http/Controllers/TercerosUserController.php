@@ -37,7 +37,6 @@ class TercerosUserController extends Controller
         Session::flush();
         Cache::flush();
         Auth::logout();
-        request()->session->regenerate();
     }
 
 
