@@ -61,7 +61,7 @@
                     <div class="t24">PBX: (+57-2) 488 1616</div>
                     <div class="t24 mb15">Calle 35 # 4-31 - Cali - Colombia</div>
                     <div >Visita nuestro sitio web:</div>
-                    <div class="tB"> <a href="http://www.balquimia.com"> www.balquimia.com</a></div>
+                    <div class="tB"> www.balquimia.com</a></div>
                 </td>
                 <td width="30%" class="taR">
                     <div class="t24">NIT: 900.755.214-4</div>

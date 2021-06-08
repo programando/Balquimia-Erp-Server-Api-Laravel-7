@@ -27,6 +27,4 @@ class InvoiceSendXmlPdfToCustomer
                             $event->ZipPathFile, $event->ZipFile
                             ));
     }
- 
-
 }
